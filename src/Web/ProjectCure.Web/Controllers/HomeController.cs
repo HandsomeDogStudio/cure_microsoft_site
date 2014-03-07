@@ -33,5 +33,10 @@ namespace ProjectCure.Web.Controllers
 
             return View();
         }
+
+        public ActionResult Calendar()
+        {
+            return View();
+        }
     }
 }

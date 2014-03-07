@@ -6,7 +6,6 @@
 html, body {
   height: 100%;
 }
-
 #wrap {
   min-height: 100%;
 }
@@ -17,7 +16,6 @@ html, body {
 }
 
 footer {
-  color:#aaa;
   padding-top:20px;
 }
 
@@ -47,11 +45,3 @@ footer {
   background:url('/images/wood-slates.jpg');
   color:#fff;
 }
-
-.delete { color:red; }
-
-.new-user { margin-bottom:20px; }
-
-/* Table styles */
-
-.align-right { text-align:right; }
