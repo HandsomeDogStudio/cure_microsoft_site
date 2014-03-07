@@ -11,5 +11,6 @@ namespace ProjectCureData
 	{
 		bool IsValidUser(string userName, string password);
 		User GetUserByUserName(string userName);
+	    IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate);
 	}
 }

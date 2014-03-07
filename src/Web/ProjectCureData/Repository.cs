@@ -25,5 +25,14 @@ namespace ProjectCureData
 				return user;
 			}
 		}
+
+	    public IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate)
+	    {
+	        endDate = endDate.AddDays(1);
+	        using (var ctx = new ProjectCureContext())
+	        {
+	            return ctx.Events.Where(e => e.EventStartDateTime >= startDate && e.EventEndDateTime < endDate).ToList();
+	        }
+	    }
 	}
 }
