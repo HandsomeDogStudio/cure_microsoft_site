@@ -46,3 +46,9 @@ footer {
   background:url('/images/wood-slates.jpg');
   color:#fff;
 }
+
+.delete { color:red; }
+
+/* Table styles */
+
+.align-right { text-align:right; }
