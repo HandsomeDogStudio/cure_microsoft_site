@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectCureData", "ProjectC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectCure.IntegrationTests", "ProjectCure.IntegrationTests\ProjectCure.IntegrationTests.csproj", "{C85638AF-57DA-4A93-AC39-302F802E08FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectCure.Web", "ProjectCure.Web\ProjectCure.Web.csproj", "{73F69F0B-4DF5-482D-8CDF-5FAD16DAC197}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{C85638AF-57DA-4A93-AC39-302F802E08FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C85638AF-57DA-4A93-AC39-302F802E08FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C85638AF-57DA-4A93-AC39-302F802E08FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73F69F0B-4DF5-482D-8CDF-5FAD16DAC197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73F69F0B-4DF5-482D-8CDF-5FAD16DAC197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73F69F0B-4DF5-482D-8CDF-5FAD16DAC197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73F69F0B-4DF5-482D-8CDF-5FAD16DAC197}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
