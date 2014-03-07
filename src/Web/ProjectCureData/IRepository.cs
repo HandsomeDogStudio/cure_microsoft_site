@@ -11,5 +11,7 @@ namespace ProjectCureData
 	{
 		bool IsValidUser(string userName, string password);
 		User GetUserByUserName(string userName);
+		void UpdatePassword(User user);
+		void SaveUser(User user);
 	}
 }

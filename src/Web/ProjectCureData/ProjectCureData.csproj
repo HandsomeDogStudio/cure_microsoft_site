@@ -61,6 +61,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
+    <Compile Include="SHA256Encryption.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
