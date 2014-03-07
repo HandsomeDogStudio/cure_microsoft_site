@@ -34,7 +34,8 @@
 	    // page is now ready, initialize the calendar...
 
 	    $('#calendar').fullCalendar({
-	    	height: $(window).height() - 120
+	    	height: $(window).height() - 120,
+	    	events: '/data.json'
 	    })
 
 	});
