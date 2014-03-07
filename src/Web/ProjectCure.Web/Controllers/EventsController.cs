@@ -21,7 +21,7 @@ namespace ProjectCure.Web.Controllers
                 results.Add(new
                 {
                     id = e.EventId,
-                    url = Url.RouteUrl("TODO"),
+                    url = Url.RouteUrl(new { id = e.EventId }),
                     title = e.EventTitle,
                     start = e.EventStartDateTime.ToString("O"),
                     end = e.EventEndDateTime.ToString("O"),
@@ -30,6 +30,14 @@ namespace ProjectCure.Web.Controllers
             }
 
             return Json(results, JsonRequestBehavior.AllowGet);
+        }
+
+        public PartialViewResult Index(int id)
+        {
+            return View("", new
+            {
+                
+            });
         }
 
 //        [HttpPost]

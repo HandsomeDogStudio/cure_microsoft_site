@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace ProjectCureData
 	        endDate = endDate.AddDays(1);
 	        using (var ctx = new ProjectCureContext())
 	        {
-	            return ctx.Events.Where(e => e.EventStartDateTime >= startDate && e.EventEndDateTime < endDate).ToList();
+	            return ctx.Events.Include("User").Where(e => e.EventStartDateTime >= startDate && e.EventEndDateTime < endDate).ToList();
 	        }
 	    }
 	}
