@@ -5,6 +5,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Newtonsoft.Json;
 using ProjectCure.Web.Models;
 using ProjectCure.Web.Code;
 using ProjectCureData;
@@ -32,21 +33,25 @@ namespace ProjectCure.Web.Controllers
         {
             if (ModelState.IsValid && Repository.IsValidUser(model.UserName, model.Password))
             {
-                var ticket = new FormsAuthenticationTicket(1,
-                    model.UserName,
-                    DateTime.Now,
-                    DateTime.Now.AddMinutes(30),
-                    false,
-                    "",
-                    FormsAuthentication.FormsCookiePath);
-                
-                HttpCookie faCookie = new HttpCookie(
-                    FormsAuthentication.FormsCookieName, 
-                    FormsAuthentication.Encrypt(ticket));
+                var user = Repository.GetUserByUserName(model.UserName);
+                if (user != null)
+                {
+                    var ticket = new FormsAuthenticationTicket(1,
+                        model.UserName,
+                        DateTime.Now,
+                        DateTime.Now.AddMinutes(30),
+                        false,
+                        JsonConvert.SerializeObject(user.ToUserSerializable()),
+                        FormsAuthentication.FormsCookiePath);
 
-                Response.Cookies.Add(faCookie);
+                    HttpCookie faCookie = new HttpCookie(
+                        FormsAuthentication.FormsCookieName,
+                        FormsAuthentication.Encrypt(ticket));
 
-                return RedirectToLocal(returnUrl);
+                    Response.Cookies.Add(faCookie);
+
+                    return RedirectToLocal(returnUrl);
+                }
             }
 
             // If we got this far, something failed, redisplay form

@@ -21,7 +21,9 @@ namespace ProjectCureData
 		{
 			using (var ctx = new ProjectCureContext())
 			{
-				var user = ctx.Users.FirstOrDefault(u => u.UserEmail == userName);
+				var user = ctx.Users
+                    .Include("Role")
+                    .FirstOrDefault(u => u.UserEmail == userName);
 				return user;
 			}
 		}
