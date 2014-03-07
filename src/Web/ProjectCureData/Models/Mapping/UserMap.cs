@@ -11,9 +11,6 @@ namespace ProjectCureData.Models.Mapping
             this.HasKey(t => t.UserId);
 
             // Properties
-            this.Property(t => t.UserId)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             this.Property(t => t.UserEmail)
                 .IsRequired()
                 .HasMaxLength(256);
@@ -25,7 +22,6 @@ namespace ProjectCureData.Models.Mapping
                 .HasMaxLength(50);
 
             this.Property(t => t.UserPassword)
-                .IsRequired()
                 .HasMaxLength(256);
 
             // Table & Column Mappings
