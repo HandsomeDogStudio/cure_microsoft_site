@@ -35,7 +35,10 @@
 
 	    $('#calendar').fullCalendar({
 	    	height: $(window).height() - 120,
-	    	events: '/data.json'
+	    	events: '/data.json',
+	    	eventRender: function(event, element){
+	    		element.prepend("3 PM This is at 3PM")
+	    	}
 	    })
 
 	});
