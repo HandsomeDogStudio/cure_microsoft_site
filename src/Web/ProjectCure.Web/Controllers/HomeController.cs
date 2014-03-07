@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ProjectCure.Web.Code;
 using ProjectCureData;
 
 namespace ProjectCure.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ProjectCureControllerBase
     {
-	    private readonly IRepository _repository;
-
-	    public HomeController(IRepository repository)
+	    public HomeController(IRepository repository) : base(repository)
 		{
-			_repository = repository;
 		}
 
         public ActionResult Index()
@@ -33,6 +31,11 @@ namespace ProjectCure.Web.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ActionResult Calendar()
+        {
             return View();
         }
     }
