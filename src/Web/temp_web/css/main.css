@@ -25,7 +25,22 @@ footer {
   padding-left: 20px;
 }
 
-
+/* Classes for Event Types */
+.fc-event{
+  padding: 5px;
+}
+.fc-event.available{
+  background-color: #ca0510;
+  border: 1px solid #ca0510;
+}
+.fc-event.owner{
+  background-color: #23ca3b;
+  border: 1px solid #23ca3b;
+}
+.fc-event.assigned{
+  background-color: #698080;
+  border: 1px solid: $698080;
+}
 
 
 
