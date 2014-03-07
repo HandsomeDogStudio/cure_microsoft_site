@@ -14,7 +14,12 @@ namespace ProjectCureData
 		{
 			using (var ctx = new ProjectCureContext())
 			{
-				return ctx.Users.Any(u => u.UserEmail == userName && u.UserPassword == password);
+				var user = ctx.Users.First(u => u.UserEmail == userName);
+				if (user == null)
+					return false;
+
+				var hashedPassword = password == null ? null : SHA256Encryption.ComputeSHA256Hash(password);
+				return (hashedPassword == user.UserPassword);
 			}
 		}
 
@@ -22,20 +27,49 @@ namespace ProjectCureData
 		{
 			using (var ctx = new ProjectCureContext())
 			{
+<<<<<<< HEAD
+				var user = ctx.Users.FirstOrDefault(u => u.UserEmail == userName);
+				if (user != null)
+					user.UserPassword = null;
+=======
 				var user = ctx.Users
                     .Include("Role")
                     .FirstOrDefault(u => u.UserEmail == userName);
+>>>>>>> f6bd98bed217a290de533a637afd7af89cf5b50f
 				return user;
 			}
 		}
 
-	    public IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate)
-	    {
-	        endDate = endDate.AddDays(1);
-	        using (var ctx = new ProjectCureContext())
-	        {
-	            return ctx.Events.Include("User").Where(e => e.EventStartDateTime >= startDate && e.EventEndDateTime < endDate).ToList();
-	        }
-	    }
+		public void UpdatePassword(User user)
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var dbUser = ctx.Users.FirstOrDefault(u => u.UserEmail == user.UserEmail);
+				if (dbUser == null)
+					throw new ArgumentException();
+				dbUser.UserPassword = SHA256Encryption.ComputeSHA256Hash(user.UserPassword);
+				ctx.SaveChanges();
+			}
+		}
+
+		public void SaveUser(User user)
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var userExists = ctx.Users.Any(u => u.UserEmail == user.UserEmail);
+				if (userExists)
+				{
+					ctx.Entry(user).State = EntityState.Modified;
+					ctx.Entry(user).Property(x => x.UserPassword).IsModified = false;
+				}
+				else
+				{
+					user.UserPassword = null;
+					ctx.Entry(user).State = EntityState.Added;
+				}
+
+				ctx.SaveChanges();
+			}
+		}
 	}
 }
