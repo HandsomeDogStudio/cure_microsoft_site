@@ -17,12 +17,7 @@ html, body {
 }
 
 footer {
-  position: relative;
-  margin-top: -50px; /* negative value of footer height */
-  height: 50px;
-  clear:both;
   padding-top:20px;
-  padding-left: 20px;
 }
 
 /* Classes for Event Types */
@@ -41,15 +36,13 @@ footer {
   background-color: #698080;
   border: 1px solid: $698080;
 }
+.btn-black {
+  color:#fff;
+  background-color:#555;
+  border-color:#444;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.jumbotron.sign-in {
+  background:url('/images/wood-slates.jpg');
+  color:#fff;
+}
