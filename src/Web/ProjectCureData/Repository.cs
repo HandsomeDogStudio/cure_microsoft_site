@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ProjectCureData.Models;
@@ -81,10 +82,29 @@ namespace ProjectCureData
 		{
 			using (var ctx = new ProjectCureContext())
 			{
-				var user = ctx.Users
+				var users = ctx.Users
 					.Include("Role")
 					.ToList();
-				return user;
+
+				foreach (var user in users.Where(u => u.UserActiveIn))
+				{
+					var closureUser = user;
+					user.Events = ctx.Events
+						.Where(e => e.User.UserId == closureUser.UserId && e.EventStartDateTime > DateTime.Now)
+						.OrderBy(e => e.EventStartDateTime)
+						.Take(1).ToList();
+				}
+
+				return users;
+			}
+		}
+
+		public IEnumerable<Role> GetRoleList()
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var roles = ctx.Roles.ToList();
+				return roles;
 			}
 		}
 
