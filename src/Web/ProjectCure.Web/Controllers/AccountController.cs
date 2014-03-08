@@ -12,7 +12,6 @@ using ProjectCureData;
 
 namespace ProjectCure.Web.Controllers
 {
-    [CustomAuthorize]
     public class AccountController : ProjectCureControllerBase
     {
         public AccountController(IRepository repository) : base(repository)
@@ -56,7 +55,7 @@ namespace ProjectCure.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "The email or password provided is incorrect.");
             ViewBag.HideLogin = true;
 
             return View(model);
@@ -91,13 +90,14 @@ namespace ProjectCure.Web.Controllers
                     UserPassword = model.NewPassword
                 });
 
+                model.PasswordChanged = true;
 
+                var notifier = new EmailNotifier();
+                notifier.PasswordChangeConfirmationNotification(Repository, model.UserName);
             }
 
             return View(model);
         }
-
-        #region Helpers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -110,7 +110,5 @@ namespace ProjectCure.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        
-        #endregion
     }
 }

@@ -11,6 +11,24 @@ a, .pc-red, .delete { color:#d3113a; }
 a:hover { color:#a40a2b; }
 .btn-danger { background-color:#d3113a; }
 
+.navbar-brand.logo {
+  background:url('/images/pc-logo.png') no-repeat 0 0;
+  display:block;
+  margin-top:9px;
+  margin-right:20px;
+  width:48px;
+  height:35px;
+}
+
+@media
+(-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .navbar-brand.logo {
+    background:url('/images/pc-logo@2x.png') no-repeat 0 0;
+    background-size:48px 35px;
+  }
+}
+
 #wrap {
   min-height: 100%;
 }
@@ -68,13 +86,13 @@ footer {
 .jumbotron.sign-in h1 {
   font-family:Georgia;
   text-shadow:1px 1px 5px #231f20;
-
 }
 
 .about {
   font-size:18px;
   line-height:35px;
   padding:30px 20px 60px 20px;
+  text-align:center;
 }
 
 .jumbotron.map {

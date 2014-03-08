@@ -171,7 +171,6 @@
     <Compile Include="Code\ProjectCureControllerBase.cs" />
     <Compile Include="Code\WebRoles.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\EmailNotifier.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />

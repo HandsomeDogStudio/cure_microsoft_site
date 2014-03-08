@@ -6,6 +6,24 @@ a, .pc-red, .delete { color:#d3113a; }
 a:hover { color:#a40a2b; }
 .btn-danger { background-color:#d3113a; text-decoration:none; }
 
+.navbar-brand.logo {
+  background:url('/Content/img/pc-logo.png') no-repeat 0 0;
+  display:block;
+  margin-top:9px;
+  margin-right:20px;
+  width:48px;
+  height:35px;
+}
+
+@media
+(-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  .navbar-brand.logo {
+    background:url('/Content/img/pc-logo@2x.png') no-repeat 0 0;
+    background-size:48px 35px;
+  }
+}
+
 #wrap {
   min-height: 100%;
 }
@@ -14,7 +32,10 @@ a:hover { color:#a40a2b; }
   overflow:auto;
   padding-bottom:150px; /* this needs to be bigger than footer height*/
 }
-
+.container-body {
+    margin-bottom: 20px;
+    padding-top: 10px;
+}
 .container.footer {
   background:#000;
   color:#aaa;
@@ -64,6 +85,7 @@ footer {
   font-size:18px;
   line-height:35px;
   padding:30px 20px 60px 20px;
+  text-align:center;
 }
 
 .jumbotron.map {

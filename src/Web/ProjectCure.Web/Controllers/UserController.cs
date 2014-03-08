@@ -31,11 +31,23 @@ namespace ProjectCure.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult Add()
+        {
+            return PartialView("Edit",
+                new EditUserModel
+                {
+                    IsNew = true,
+                    IsActive = true,
+                    Roles = Repository.GetRoleList(),
+                });
+        }
+
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             var u = Repository.GetUserById(id);
 
-            return PartialView(
+            return PartialView("Edit",
                 new EditUserModel
                 {
                     UserId = u.UserId,
@@ -67,15 +79,24 @@ namespace ProjectCure.Web.Controllers
                     UserNotifyTenDays = model.Notify10Days,
                 };
 
-                //TODO: if inactivating, cancel associated future events
+                if (!model.IsNew && !user.UserActiveIn)
+                {
+                    var oldUser = Repository.GetUserById(user.UserId);
+                    if (oldUser != null && oldUser.UserActiveIn)
+                    {
+                        //remove manager from future events if being inactivated
+                        Repository.RemoveManagerFromEvents(user.UserId);
 
+                        //TODO: send notifications?
+                    }
+                }
 
                 Repository.SaveUser(user);
             }
 
             model.Roles = Repository.GetRoleList();
 
-            return PartialView(model);
+            return PartialView("Edit", model);
         }
 
         [HttpPost]
@@ -96,7 +117,7 @@ namespace ProjectCure.Web.Controllers
                 success = true;
 
                 var notifier = new EmailNotifier();
-                notifier.GiveTemporaryPassword(Repository, user.UserEmail, tempPassword);
+                notifier.GiveTemporaryPasswordNotification(Repository, user.UserEmail, tempPassword);
 
                 return Json(new
                 {
