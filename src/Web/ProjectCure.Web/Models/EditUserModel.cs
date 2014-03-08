@@ -27,7 +27,7 @@ namespace ProjectCure.Web.Models
         [StringLength(50)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-
+        
         [Required]
         [Display(Name = "Role")]
         public int RoleId { get; set; }
