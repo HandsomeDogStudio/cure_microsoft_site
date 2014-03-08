@@ -7,6 +7,11 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th colspan="6">
+                    @Html.ActionLink("Add", "Add")
+                </th>
+            </tr>
+            <tr>
                 <th></th>
                 <th>Username</th>
                 <th>First Name</th>
@@ -16,11 +21,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td colspan="6">
-                    @Html.ActionLink("Add", "Add", null, new { @class = "btn" })
-                </td>
-            </tr>
             @foreach (var u in Model.Users)
             {
             <tr>

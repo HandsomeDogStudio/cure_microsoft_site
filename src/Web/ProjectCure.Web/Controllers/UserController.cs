@@ -10,18 +10,18 @@ using ProjectCureData;
 namespace ProjectCure.Web.Controllers
 {
     [CustomAuthorize(Roles = "Admin")]
-    public class UserController : ProjectCureControllerBase
+    public class AdminController : ProjectCureControllerBase
     {
-        public UserController(IRepository repository) : base(repository)
+        public AdminController(IRepository repository) : base(repository)
         {
         }
 
         public ActionResult Index()
         {
-            return RedirectToAction("List");
+            return RedirectToAction("UserList");
         }
 
-        public ActionResult List()
+        public ActionResult UserList()
         {
             return View(
                 new UserListModel
