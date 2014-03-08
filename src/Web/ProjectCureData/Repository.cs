@@ -121,6 +121,6 @@ namespace ProjectCureData
 	            ctx.Events.Remove(GetEventById(eventId));
 	        }
 	    }
->>>>>>> 9811297a05e8aa256fa28ce9fa1e76475aa7686c
+
 	}
 }
