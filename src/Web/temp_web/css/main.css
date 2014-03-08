@@ -17,6 +17,7 @@ html, body {
 }
 
 footer {
+  color:#aaa;
   padding-top:20px;
 }
 
@@ -48,6 +49,8 @@ footer {
 }
 
 .delete { color:red; }
+
+.new-user { margin-bottom:20px; }
 
 /* Table styles */
 
