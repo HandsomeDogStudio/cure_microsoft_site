@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ProjectCure.Web.Code;
 using ProjectCureData;
 
 namespace ProjectCure.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ProjectCureControllerBase
     {
-	    private readonly IRepository _repository;
-
-	    public HomeController(IRepository repository)
+	    public HomeController(IRepository repository) : base(repository)
 		{
-			_repository = repository;
 		}
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
@@ -36,6 +35,7 @@ namespace ProjectCure.Web.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Calendar()
         {
             return View();

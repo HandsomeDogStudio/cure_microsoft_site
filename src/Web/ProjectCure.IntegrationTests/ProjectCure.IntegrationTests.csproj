@@ -61,6 +61,7 @@
     <Compile Include="ConnectivityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SHA256Test.cs" />
+    <Compile Include="PasswordSavingAndRetrieval.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProjectCureData\ProjectCureData.csproj">

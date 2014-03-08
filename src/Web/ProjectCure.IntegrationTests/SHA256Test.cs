@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ProjectCureData;
 
 namespace ProjectCure.IntegrationTests
 {
@@ -12,14 +13,7 @@ namespace ProjectCure.IntegrationTests
         [TestMethod]
         public void TestSHA256()
         {
-            Console.Out.WriteLine(ComputeSHA256Hash("hackathon"));
-        }
-
-        private static string ComputeSHA256Hash(string input)
-        {
-            SHA256 hash = SHA256.Create();
-            hash.ComputeHash(Encoding.ASCII.GetBytes(input));
-            return string.Concat(hash.Hash.Select(b => b.ToString("x2")));
+            Console.Out.WriteLine(SHA256Encryption.ComputeSHA256Hash("test"));
         }
     }
 }
