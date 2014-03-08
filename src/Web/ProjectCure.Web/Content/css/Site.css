@@ -38,7 +38,7 @@ a:hover { color:#a40a2b; }
 }
 .container.footer {
   background:#000;
-  color:#aaa;
+  color:#555;
   margin-right:0;
   margin-left:0;
   text-align:center;
@@ -46,7 +46,17 @@ a:hover { color:#a40a2b; }
 }
 
 footer {
-  padding:25px 0;
+  background:url('/images/pc-logo-footer.png') no-repeat center 50px;
+  padding:200px 0 25px 0;
+}
+
+@media
+(-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  footer {
+    background:url('/images/pc-logo-footer@2x.png') no-repeat center 50px;
+    background-size:400px 106px;
+  }
 }
 
 /* Classes for Event Types */
