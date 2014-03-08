@@ -46,7 +46,7 @@ namespace ProjectCure.Web.Controllers
                     Notify5Days = u.UserNotifyFiveDays,
                     Notify10Days = u.UserNotifyTenDays,
                     IsActive = u.UserActiveIn,
-                    //Roles = Repository.GetRoles(),
+                    Roles = Repository.GetRoleList(),
                 });
         }
 
@@ -70,7 +70,7 @@ namespace ProjectCure.Web.Controllers
                 Repository.SaveUser(user);
             }
 
-            //model.Roles = Repository.GetRoles();
+            model.Roles = Repository.GetRoleList();
 
             return PartialView(model);
         }
