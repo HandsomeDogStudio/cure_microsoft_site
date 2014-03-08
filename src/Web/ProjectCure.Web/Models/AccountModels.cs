@@ -41,5 +41,7 @@ namespace ProjectCure.Web.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmNewPassword { get; set; }
+
+        public bool PasswordChanged { get; set; }
     }
 }
