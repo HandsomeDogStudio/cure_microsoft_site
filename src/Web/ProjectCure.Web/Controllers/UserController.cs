@@ -86,8 +86,8 @@ namespace ProjectCure.Web.Controllers
             var user = Repository.GetUserById(id);
             if (user != null)
             {
-                //TODO: replace with generated password
-                var tempPassword = "temp";
+                var passwordGenerator = new PasswordGenerator();
+                var tempPassword = passwordGenerator.GeneratePassword(10);
 
                 user.UserPassword = tempPassword;
 
