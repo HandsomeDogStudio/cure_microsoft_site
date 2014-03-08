@@ -21,6 +21,11 @@ footer {
   padding-top:20px;
 }
 
+/* Calender CSS */
+#calendar-container{
+  margin-top: 20px;
+}
+
 /* Classes for Event Types */
 .fc-event{
   padding: 5px;
@@ -55,3 +60,4 @@ footer {
 /* Table styles */
 
 .align-right { text-align:right; }
+

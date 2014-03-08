@@ -25,35 +25,46 @@
 </head>
 
 <body>
+	    <!--[if lt IE 7]>
+	        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+	    <![endif]-->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="/">Project C.U.R.E</a>
+	    </div>
+	    <div class="navbar-collapse collapse">
+	      <ul class="nav navbar-nav">
+	        <li><a href="/calendar.html">Calendar</a></li>
+	        <li><a href="/admin/">Admin</a></li>
+	      </ul>
+	      <form class="navbar-form navbar-right">
+	        <div class="form-group">
+	          <input type="text" placeholder="Email" class="form-control">
+	        </div>
+	        <div class="form-group">
+	          <input type="password" placeholder="Password" class="form-control">
+	        </div>
+	        <button type="submit" class="btn btn-danger">Sign in</button>
+	      </form>
+	    </div><!--/.navbar-collapse -->
+	  </div>
+	</div>
 
 
-	<div class="container">
+	<div id="calendar-container" class="container">
 		<div id='calendar'></div>
 	</div>
 
-	<!-- Button trigger modal -->
-	<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" href="events/1.html">
-	  Launch demo modal
-	</button>
-
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-	      </div>
-	      <div class="modal-body">
-	        ...
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
-	      </div>
-	    </div>
-	  </div>
 	</div>
+
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
@@ -61,6 +72,7 @@
   <script src="js/vendor/bootstrap.min.js"></script>
 
   <script type='text/javascript' src='js/vendor/fullcalendar/fullcalendar.js'></script>
+  <script type='text/javascript' src='js/vendor/moment.js'></script>
 
   <script src="js/main.js"></script>
 
@@ -73,24 +85,49 @@
 
 		<script>
 			$(document).ready(function() {
-			    // page is now ready, initialize the calendar...
-			    $('#calendar').fullCalendar({
-			    	height: $(window).height() - 120,
-			    	events: '/data.json',
-			    	eventRender: function(event, element){
-			    		var time = "3 PM ";
-			    		element.attr('id', event.id);
-			    		element.find('.fc-event-title').html(time + event.title);
-			    	},
-			    	eventClick: function(event) {
-	    	        if (event.url) {
-	  	            $("#myModal").modal({
-	  	            	remote: "/events/1.html"
-	  	            });
-	  	            return false;
-	    	        }
-		    	    }
-			    })
+		    // page is now ready, initialize the calendar...
+		    $('#calendar').fullCalendar({
+		    	height: $(window).height() - 120,
+		    	events: '/data.json',
+		    	eventRender: function(event, element){
+		    		var time = "3 PM ";
+		    		element.find('.fc-event-title').html(time + event.title);
+		    	},
+		    	eventClick: function(event) {
+  	        if (event.url) {
+	            $("#myModal").modal({
+	            	remote: event.url
+	            });
+	            return false;
+  	        }
+    	    }
+		    })
+
+		    $(document).on('click', '.claim', function(event) {
+		        event.preventDefault();
+
+		        var choice = confirm(this.getAttribute('data-confirm'), 'yes', 'no');
+
+		        if (choice) {
+		        	$(this).submit(function() {
+
+		        	    var url = "path/to/your/script.php"; // the script where you handle the form input.
+
+		        	    $.ajax({
+		        	           type: "POST",
+		        	           url: url,
+		        	           data: $("#idForm").serialize(), // serializes the form's elements.
+		        	           success: function(data)
+		        	           {
+		        	               alert(data); // show response from the php script.
+		        	               // change color of event
+		        	           }
+		        	         });
+
+		        	    return false; // avoid to execute the actual submit of the form.
+		        	});
+		        }
+		    });
 			});
 		</script>
 
