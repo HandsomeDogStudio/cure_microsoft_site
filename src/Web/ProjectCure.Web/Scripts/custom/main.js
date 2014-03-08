@@ -3,7 +3,7 @@ $(function () {
         $("#logoutForm").submit();
     });
     
-   
+    //full calendar
     $('#calendar').fullCalendar({
         height: $(window).height() - 120,
         events: '/data.json',
@@ -21,6 +21,7 @@ $(function () {
         }
     })
 
+    //calendar event clicks
     $(document).on('click', '.claim', function(event) {
         event.preventDefault();
 
