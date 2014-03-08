@@ -117,7 +117,14 @@ namespace ProjectCure.Web.Controllers
                 case EventEditAction.Delete:
                     if (HttpContext.User.IsInRole("Admin"))
                     {
+                        Event @event = Repository.GetEventById(id);
                         Repository.DeleteEventById(id);
+
+                        if (@event.User != null)
+                        {
+                            var notifier = new EmailNotifier();
+                            notifier.EventCancellationNotification(Repository, @event, @event.User.UserEmail);
+                        }
                     }
                     break;
             }

@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using ProjectCure.Web.Code;
+﻿using ProjectCure.Web.Code;
 using ProjectCure.Web.Models;
 using ProjectCureData;
+using System;
+using System.Configuration;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace ProjectCure.Web.Controllers
 {
     [CustomAuthorize(Roles = "Admin")]
     public class UserController : ProjectCureControllerBase
     {
+        private static readonly int UnfilledNotificationEmailDays = Convert.ToInt32(ConfigurationManager.AppSettings["UnfilledNotificationEmailDays"]);
+
         public UserController(IRepository repository) : base(repository)
         {
         }
@@ -152,6 +153,37 @@ namespace ProjectCure.Web.Controllers
 
             return Json(new { success });
         }
+
+        [HttpPost]
+        public ActionResult UnfilledEventsNotification()
+        {
+            try
+            {
+                var events = Repository.GetEventsBetweenDates(DateTime.Today, DateTime.Today.AddDays(UserController.UnfilledNotificationEmailDays))
+                                       .Where(c => c.EventManagerId == null)
+                                       .OrderBy(c => c.EventStartDateTime)
+                                       .ToList();
+
+                var notifier = new EmailNotifier();
+                notifier.UnfilledEventsNotification(Repository, events);
+
+                return Json(new
+                {
+                    success = true,
+                    message = string.Format("{0} notification emails went out.", events.Count)
+                });
+            }
+            catch (Exception ex) 
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = ex.GetBaseException().Message
+                });
+            }
+
+        }
+
 
         private string GetNewPassword(int length = 10)
         {
