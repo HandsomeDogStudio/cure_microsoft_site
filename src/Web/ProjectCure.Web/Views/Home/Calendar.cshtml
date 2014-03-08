@@ -96,8 +96,7 @@
 		            height: $(window).height() - 120,
 		            events: '@Url.Content("~/events/")',
 		            eventRender: function (event, element) {
-		                var time = "3 PM ";
-		                element.find('.fc-event-title').html(time + event.title);
+		                element.find('.fc-event-title').html(moment(event.start).format("h A") + ' ' + event.title);
 		            },
 		            eventClick: function (event) {
 		                if (event.url) {
@@ -109,15 +108,16 @@
 		            }
 		        })
 
-		        $(document).on("click", "#eventForm", function () {
+		        $(document).on("click", "#eventForm .claim", function () {
 		            var choice = confirm(this.getAttribute('data-confirm'), 'yes', 'no');
 		            if (choice) {
-		                var url = "http://nothing"; // the script where you handle the form input.
+		                var url = $(this).parents("form").attr("action"); // the script where you handle the form input.
 
 		                $.ajax({
-		                    type: "POST",
+		                    type: "PUT",
 		                    url: url,
-		                    data: $("#eventForm").serialize(), // serializes the form's elements.
+		                    data: { Action: "assign" }, // serializes the form's elements.
+		                    dataType: "json",
 		                    success: function (data) {
 		                        alert(data); // show response from the php script.
 
