@@ -29,7 +29,11 @@ namespace ProjectCure.Web.WebPages
 
         public bool IsAuthenticated
         {
-            get { return User != null; }
+            get
+            {
+                return User != null &&
+                       !string.IsNullOrEmpty(User.Identity.Name);
+            }
         }
 
         #endregion

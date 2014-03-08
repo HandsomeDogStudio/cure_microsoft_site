@@ -127,6 +127,19 @@ footer {
   }
 }
 
+@media screen and (max-width:500px) {
+  footer {
+    background-size:300px 80px;
+  }
+  .jumbotron.map svg {
+    width:240px;
+    height:149px;
+  }
+  .location-info {
+    padding-left:0;
+  }
+}
+
 .about a, .map a { text-decoration:underline; }
 
 .map a.btn { text-decoration:none; }
