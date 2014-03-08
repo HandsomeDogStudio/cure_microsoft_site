@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var baseTitle = "Project C.U.R.E";
+    var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? string.Format("{0} - {1}", baseTitle, ViewBag.Title) : baseTitle;
+}
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -7,8 +11,8 @@
  <!--<![endif]-->
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title - Project C.U.R.E</title>    
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <title>@pageTitle</title>    
+    <link href="~/Content/img/icons/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     @Styles.Render(StyleBundles.Site)
     @Scripts.Render(ScriptBundles.Modernizr)

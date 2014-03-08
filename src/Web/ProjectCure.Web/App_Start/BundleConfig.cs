@@ -25,10 +25,11 @@ namespace ProjectCure.Web
             //CSS Styles
             bundles.Add(new StyleBundle(StyleBundles.Site).Include(
                         "~/Content/css/bootstrap.css",
+                        "~/Content/css/bootstrap-custom.css",
                         "~/Content/css/bootstrap-theme.css",
                         "~/Content/css/fullcalendar.css",
                         "~/Content/css/fullcalendar.print.css",
-                        "~/Content/css/Site.css").ForceOrdered());
+                        "~/Content/css/site.css").ForceOrdered());
         }
 
         /// <summary>
@@ -40,9 +41,14 @@ namespace ProjectCure.Web
             bundles.Add(new ScriptBundle(ScriptBundles.Modernizr).Include(
                         "~/Scripts/core/modernizr-{version}.js"));
             //Jquery
+            bundles.Add(new ScriptBundle(ScriptBundles.Respond).Include(
+                        "~/Scripts/core/respond.js",
+                        "~/Scripts/core/respond.matchmedia.addListener.js"));
+
+            //RespondJs (for IE8)
             bundles.Add(new ScriptBundle(ScriptBundles.Jquery).Include(
-                        "~/Scripts/jquery/jquery-{version}.js",
-                        "~/Scripts/jquery/jquery-migrate-{version}.js"));
+            "~/Scripts/jquery/jquery-{version}.js",
+            "~/Scripts/jquery/jquery-migrate-{version}.js"));
 
             //Bootstrap
             bundles.Add(new ScriptBundle(ScriptBundles.Bootstrap).Include(

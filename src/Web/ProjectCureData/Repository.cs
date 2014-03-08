@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ProjectCureData.Models;
@@ -81,10 +82,29 @@ namespace ProjectCureData
 		{
 			using (var ctx = new ProjectCureContext())
 			{
-				var user = ctx.Users
+				var users = ctx.Users
 					.Include("Role")
 					.ToList();
-				return user;
+
+				foreach (var user in users.Where(u => u.UserActiveIn))
+				{
+					var closureUser = user;
+					user.Events = ctx.Events
+						.Where(e => e.User.UserId == closureUser.UserId && e.EventStartDateTime > DateTime.Now)
+						.OrderBy(e => e.EventStartDateTime)
+						.Take(1).ToList();
+				}
+
+				return users;
+			}
+		}
+
+		public IEnumerable<Role> GetRoleList()
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var roles = ctx.Roles.ToList();
+				return roles;
 			}
 		}
 
@@ -122,5 +142,39 @@ namespace ProjectCureData
 	        }
 	    }
 
+	    public void SaveEvent(Event @event)
+	    {
+	        using (var ctx = new ProjectCureContext())
+	        {
+	            bool eventExists = ctx.Events.Any(e => e.EventId == @event.EventId);
+	            if (eventExists)
+	            {
+                    ctx.Entry(@event).State = EntityState.Modified;
+	            }
+	            else
+	            {
+	                ctx.Entry(@event).State = EntityState.Added;
+	            }
+
+	            ctx.SaveChanges();
+	        }
+	    }
+
+	    public void AssignManager(int eventId, string username)
+	    {
+	        using (var ctx = new ProjectCureContext())
+	        {
+	            Event e = GetEventById(eventId);
+                if(e == null) throw new ArgumentException();
+	            User u = null;
+	            if (username != null)
+	            {
+	                u = GetUserByUserName(username);
+                    if(u == null) throw new ArgumentException();
+	            }
+	            e.User = u;
+                SaveEvent(e);
+	        }
+	    }
 	}
 }

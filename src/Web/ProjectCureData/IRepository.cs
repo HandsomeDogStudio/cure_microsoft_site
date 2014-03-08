@@ -16,11 +16,14 @@ namespace ProjectCureData
 		void UpdatePassword(User user);
 		void SaveUser(User user);
 		IEnumerable<User> GetUserList();
-		
+		IEnumerable<Role> GetRoleList();
+			
 		// Event Methods
 		IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate);
 		Event GetEventById(int eventId);
 		void DeleteEventById(int eventId);
+        void SaveEvent(Event @event);
+	    void AssignManager(int eventId, string username);
 
 		// Template Methods
 		Template GetTemplateByName(string templateName);

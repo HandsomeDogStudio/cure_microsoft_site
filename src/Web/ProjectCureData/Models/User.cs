@@ -19,7 +19,7 @@ namespace ProjectCureData.Models
         public bool UserNotifyFiveDays { get; set; }
         public bool UserNotifyTenDays { get; set; }
         public string UserPassword { get; set; }
-        public virtual ICollection<Event> Events { get; set; }
+        public ICollection<Event> Events { get; set; }
         public virtual Role Role { get; set; }
     }
 }
