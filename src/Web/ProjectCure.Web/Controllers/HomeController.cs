@@ -14,12 +14,12 @@ namespace ProjectCure.Web.Controllers
 		{
 		}
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
         }
         
-        [CustomAuthorize]
         public ActionResult Calendar()
         {
             return View();

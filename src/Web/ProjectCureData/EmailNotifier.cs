@@ -46,6 +46,59 @@ namespace ProjectCure.Web.Controllers
             this.smtpClient = smtpClient;
         }
 
+        public void GiveTemporaryPasswordNotification(IRepository repository, string recipientAddress, string tempPassword)
+        {
+            string templateName = "Password Reset Email";
+            string templateBody;
+            string templateSubject;
+
+            GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
+
+            //Fill in the dynamic variables from template
+            templateBody.Replace("{temp password}", tempPassword);
+
+            //Send the email
+            SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
+
+        }
+
+        public void PasswordChangeConfirmationNotification(IRepository repository, string recipientAddress)
+        {
+            string templateName = "Password Change Confirmation Email";
+            string templateBody;
+            string templateSubject;
+
+            GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
+
+            //Fill in the dynamic variables from template
+            templateBody.Replace("{name}", GetFullNameFromEmailAddress(repository, recipientAddress));
+
+            //Send the email
+            SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
+        }
+
+        public void EventCancellationNotification(IRepository repository, string recipientAddress)
+        {
+            string templateName = "Password Change Confirmation Email";
+            string templateBody;
+            string templateSubject;
+
+            GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
+
+            //Fill in the dynamic variables from template
+            templateBody.Replace("{name}", GetFullNameFromEmailAddress(repository, recipientAddress));
+
+            //Send the email
+            SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
+        }
+
+        private string GetFullNameFromEmailAddress(IRepository repository, string userEmailAddress)
+        {
+            var user = repository.GetUserByUserName(userEmailAddress);
+            var userFullName = user.UserFirstName + " " + user.UserLastName;
+            return userFullName;
+        }
+
         private void CreateSmtpClient()
         {
             smtpClient = new SmtpClient
@@ -65,19 +118,6 @@ namespace ProjectCure.Web.Controllers
             templateBody = template.TemplateText;
             templateSubject = template.TemplateSubject;
         }
-
-        public void GiveTemporaryPassword(IRepository repository, string recipientAddress, string tempPassword, string templateName = "Password Reset Email")
-        {
-            string templateBody;
-            string templateSubject;
-
-            GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
-
-            //Fill in the dynamic variables from template
-
-
-        }
-
 
         private void SendNotification(List<string> recipientAddresses, string body, string subject)
         {

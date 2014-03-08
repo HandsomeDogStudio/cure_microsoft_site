@@ -6,9 +6,9 @@
 <h1>User management</h1>
 <p>Click on a name to make changes.</p>
 
-<button type="button" class="btn btn-primary new-user pull-right" data-toggle="modal" data-target=".new-user-modal-lg">Add a new user</button>
+<button id="addUser" type="button" class="btn btn-primary new-user pull-right" data-toggle="modal" data-target=".new-user-modal-lg">Add a new user</button>
 
-<table class="table table-striped table-hover">
+<table id="userList" class="table table-striped table-hover">
     <thead>
         <tr>
             <th>Name</th>
@@ -33,9 +33,13 @@
                 }
             </td>
             <td class="align-right">
-                @Html.ActionLink("Edit", "Edit", new { id = u.UserId }, new { /*data_toggle = "modal", data_target = ".bs-example-modal-lg"*/ })
+                @Html.ActionLink("Edit", "Edit", new { id = u.UserId }, new { data_toggle = "modal", data_target = ".bs-example-modal-lg" })
             </td>
         </tr>
         }
     </tbody>
 </table>
+
+<!-- User edit modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+</div>
