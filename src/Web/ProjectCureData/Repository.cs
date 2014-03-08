@@ -34,6 +34,17 @@ namespace ProjectCureData
 			}
 		}
 
+		public User GetUserById(int userId)
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var user = ctx.Users
+					.Include("Role")
+					.FirstOrDefault(u => u.UserId == userId);
+				return user;
+			}
+		}
+
 		public void UpdatePassword(User user)
 		{
 			using (var ctx = new ProjectCureContext())
@@ -65,8 +76,19 @@ namespace ProjectCureData
 				ctx.SaveChanges();
 			}
 		}
-        
-        public IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate)
+
+		public IEnumerable<User> GetUserList()
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var user = ctx.Users
+					.Include("Role")
+					.ToList();
+				return user;
+			}
+		}
+
+		public IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate)
         {
             endDate = endDate.AddDays(1);
             using (var ctx = new ProjectCureContext())
@@ -74,5 +96,13 @@ namespace ProjectCureData
                 return ctx.Events.Include("User").Where(e => e.EventStartDateTime >= startDate && e.EventEndDateTime < endDate).ToList();
             }
         }
+
+		public Template GetTemplateByName(string templateName)
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				return ctx.Templates.SingleOrDefault(t => t.TemplateName == templateName);
+			}
+		}
 	}
 }

@@ -34,7 +34,7 @@ namespace ProjectCure.Web.Controllers
 
         public PartialViewResult Index(int id)
         {
-            return View("", new
+            return PartialView("", new
             {
                 
             });
