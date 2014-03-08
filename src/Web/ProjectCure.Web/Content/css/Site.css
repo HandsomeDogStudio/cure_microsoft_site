@@ -36,6 +36,12 @@ a:hover { color:#a40a2b; }
     margin-bottom: 20px;
     padding-top: 10px;
 }
+
+.container.password {
+  padding-left:20px;
+  padding-bottom:20px;
+}
+
 .container.footer {
   background:#000;
   color:#555;
