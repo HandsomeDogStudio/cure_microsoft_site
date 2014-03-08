@@ -132,14 +132,16 @@ namespace ProjectCureData
         }
 
 
-		public void RemoveManagerFromEvents(int userId)
+		public IEnumerable<Event> RemoveManagerFromEvents(int userId)
 		{
 			using (var ctx = new ProjectCureContext())
 			{
 				var userEvents = ctx.Events.Where(e => e.User.UserId == userId && e.EventStartDateTime > DateTime.Now);
+				var returnedEvents = userEvents.ToList();
 				foreach (var userEvent in userEvents)
 					userEvent.EventManagerId = null;
 				ctx.SaveChanges();
+				return returnedEvents;
 			}
 		}
 
