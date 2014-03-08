@@ -27,6 +27,11 @@ namespace ProjectCure.Web.WebPages
             get { return User != null && User.Identity != null && User.IsInRole(WebRoles.Admin); }
         }
 
+        public bool IsAuthenticated
+        {
+            get { return User != null; }
+        }
+
         #endregion
 
         #region Methods
