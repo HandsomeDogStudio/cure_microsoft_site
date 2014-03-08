@@ -10,8 +10,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Calendar", "Calendar", "Home")</li>
-                @if(IsAdmin){
+                @if (IsAdmin)
+                {
+                    <li>@Html.ActionLink("Calendar", "Calendar", "Home")</li>                
                     <li>@Html.ActionLink("Admin", "Index", "User")</li>
                 }
             </ul>
