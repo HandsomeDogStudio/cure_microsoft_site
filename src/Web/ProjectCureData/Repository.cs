@@ -27,9 +27,6 @@ namespace ProjectCureData
 		{
 			using (var ctx = new ProjectCureContext())
 			{
-				var user = ctx.Users.FirstOrDefault(u => u.UserEmail == userName);
-				if (user != null)
-					user.UserPassword = null;
 				var user = ctx.Users
                     .Include("Role")
                     .FirstOrDefault(u => u.UserEmail == userName);
