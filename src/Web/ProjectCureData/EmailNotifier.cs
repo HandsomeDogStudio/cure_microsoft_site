@@ -55,7 +55,8 @@ namespace ProjectCure.Web.Controllers
             GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
 
             //Fill in the dynamic variables from template
-            templateBody.Replace("{new password}", tempPassword);
+            templateBody = templateBody.Replace("{name}", GetFullNameFromEmailAddress(repository, recipientAddress));
+            templateBody = templateBody.Replace("{temp password}", tempPassword);
 
             //Send the email
             SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
@@ -71,7 +72,7 @@ namespace ProjectCure.Web.Controllers
             GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
 
             //Fill in the dynamic variables from template
-            templateBody.Replace("{name}", GetFullNameFromEmailAddress(repository, recipientAddress));
+            templateBody = templateBody.Replace("{name}", GetFullNameFromEmailAddress(repository, recipientAddress));
 
             //Send the email
             SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
@@ -86,11 +87,11 @@ namespace ProjectCure.Web.Controllers
             GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
 
             //Fill in the dynamic variables from template
-            templateBody.Replace("{name}", GetFullNameFromEmailAddress(repository, recipientAddress));
-            templateBody.Replace("{title}", cancelledEvent.EventTitle);
-            templateBody.Replace("{date}", cancelledEvent.EventStartDateTime.Date.ToShortDateString());
-            templateBody.Replace("{start time}", cancelledEvent.EventStartDateTime.ToShortTimeString());
-            templateBody.Replace("{end time}", cancelledEvent.EventEndDateTime.ToShortTimeString());
+            templateBody = templateBody.Replace("{name}", GetFullNameFromEmailAddress(repository, recipientAddress));
+            templateBody = templateBody.Replace("{title}", cancelledEvent.EventTitle);
+            templateBody = templateBody.Replace("{date}", cancelledEvent.EventStartDateTime.Date.ToShortDateString());
+            templateBody = templateBody.Replace("{start time}", cancelledEvent.EventStartDateTime.ToShortTimeString());
+            templateBody = templateBody.Replace("{end time}", cancelledEvent.EventEndDateTime.ToShortTimeString());
 
             //Send the email
             SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
