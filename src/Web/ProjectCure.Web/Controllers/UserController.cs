@@ -117,7 +117,7 @@ namespace ProjectCure.Web.Controllers
                 success = true;
 
                 var notifier = new EmailNotifier();
-                notifier.GiveTemporaryPassword(Repository, user.UserEmail, tempPassword);
+                notifier.GiveTemporaryPasswordNotification(Repository, user.UserEmail, tempPassword);
 
                 return Json(new
                 {
