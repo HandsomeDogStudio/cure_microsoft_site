@@ -7,7 +7,6 @@ using ProjectCureData;
 
 namespace ProjectCure.Web.Code
 {
-    [NoCache]
     [CustomAuthorize]
     public class ProjectCureControllerBase : Controller
     {

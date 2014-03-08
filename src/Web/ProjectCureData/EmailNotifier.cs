@@ -64,7 +64,7 @@ namespace ProjectCure.Web.Controllers
             templateBody = templateBody.Replace("{temp password}", tempPassword);
 
             //Send the email
-            SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
+            SendNotification(repository, new List<string>(){recipientAddress}, templateBody, templateSubject);
         }
 
         private void SetSection()
@@ -84,7 +84,7 @@ namespace ProjectCure.Web.Controllers
             templateBody = templateBody.Replace("{name}", GetFullNameFromEmailAddress(repository, recipientAddress));
 
             //Send the email
-            SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
+            SendNotification(repository, new List<string> { recipientAddress }, templateBody, templateSubject);
         }
 
         public void EventCancellationNotification(IRepository repository, Event cancelledEvent, string recipientAddress)
@@ -102,8 +102,43 @@ namespace ProjectCure.Web.Controllers
             templateBody = templateBody.Replace("{start time}", cancelledEvent.EventStartDateTime.ToShortTimeString());
             templateBody = templateBody.Replace("{end time}", cancelledEvent.EventEndDateTime.ToShortTimeString());
 
+            //Add admins to this email thread.
+            var listOfRecipients = new List<string> { recipientAddress };
+            listOfRecipients.AddRange(repository.GetAdminList().Select(user => user.UserEmail));
+
             //Send the email
-            SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
+            SendNotification(repository, listOfRecipients, templateBody, templateSubject);
+        }
+
+        public void UnfilledEventsNotification(IRepository repository, List<Event> eventsToBeListed)
+        {
+            var allUsers = repository.GetUserList();
+            List<string> listOfUserEmails = new List<string>();
+            foreach (var user in allUsers)
+            {
+                listOfUserEmails.Add(user.UserEmail);
+            }
+
+            string templateName = "Unfilled Group Lead Email";
+            string templateBody;
+            string templateSubject;
+
+            GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
+
+            //Create list of unfilled events
+            string eventsText = "";
+            foreach (var unfilledEvent in eventsToBeListed)
+            {
+                eventsText += unfilledEvent.EventTitle + " on " + unfilledEvent.EventStartDateTime.Date.ToShortDateString()
+                            + " from " + unfilledEvent.EventStartDateTime.ToShortTimeString() + " to " 
+                            + unfilledEvent.EventEndDateTime.ToShortTimeString() + "\n\n";
+            }
+
+            //Fill in the dynamic variables from template
+            templateBody = templateBody.Replace("{events}", eventsText);
+
+            //Send the email
+            SendNotification(repository, listOfUserEmails, templateBody, templateSubject);
         }
 
         private string GetFullNameFromEmailAddress(IRepository repository, string userEmailAddress)
@@ -128,22 +163,17 @@ namespace ProjectCure.Web.Controllers
         private void GetTemplateByTemplateName(IRepository repository, string templateName, out string templateBody, out string templateSubject)
         {
             Template template = repository.GetTemplateByName(templateName);
-            //modify this to fill in the subject from the given template+
             templateBody = template.TemplateText;
             templateSubject = template.TemplateSubject;
         }
 
-        private void SendNotification(List<string> recipientAddresses, string body, string subject)
+        private void SendNotification(IRepository repository, List<string> recipientAddresses, string body, string subject)
+        {
+            //Check to make sure any of potential recipients are inactive that they are not sent an email.
+            foreach (var recipientAddress in recipientAddresses.Where(recipientAddress => !repository.GetUserByUserName(recipientAddress).UserActiveIn))
         {
 
-            var email = new MailMessage()
-            {
-                To = { recipientAddresses.First() }
-            };
-
-            //Add BCC for emails sent
-            if (section != null)
-                email.Bcc.Add(section.From);
+            var email = new MailMessage("donotreply@projectcure.org", recipientAddresses.First());
 
             //Remove the already used email address from the array
             recipientAddresses.Remove(recipientAddresses.First());
@@ -158,8 +188,9 @@ namespace ProjectCure.Web.Controllers
 
             email.Subject = subject;
             email.Body = body;
-
+                
             smtpClient.Send(email);
         }
     }
+}
 }
