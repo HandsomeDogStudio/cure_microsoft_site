@@ -22,31 +22,77 @@
 
 	<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 	<link rel='stylesheet' type='text/css' href='css/fullcalendar.css' />
-	<script type='text/javascript' src='js/vendor/jquery-1.10.1.min.js'></script>
-	<script type='text/javascript' src='js/vendor/fullcalendar/fullcalendar.js'></script>
 </head>
 
 <body>
 
-<script>
-	$(document).ready(function() {
 
-	    // page is now ready, initialize the calendar...
+	<div class="container">
+		<div id='calendar'></div>
+	</div>
 
-	    $('#calendar').fullCalendar({
-	    	height: $(window).height() - 120,
-	    	events: '/data.json',
-	    	eventRender: function(event, element){
-	    		element.prepend("3 PM This is at 3PM")
-	    	}
-	    })
+	<!-- Button trigger modal -->
+	<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" href="events/1.html">
+	  Launch demo modal
+	</button>
 
-	});
-</script>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	      </div>
+	      <div class="modal-body">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
-<div class="container">
-	<div id='calendar'></div>
-</div>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
+  <script src="js/vendor/bootstrap.min.js"></script>
+
+  <script type='text/javascript' src='js/vendor/fullcalendar/fullcalendar.js'></script>
+
+  <script src="js/main.js"></script>
+
+  <script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src='//www.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+
+		<script>
+			$(document).ready(function() {
+			    // page is now ready, initialize the calendar...
+			    $('#calendar').fullCalendar({
+			    	height: $(window).height() - 120,
+			    	events: '/data.json',
+			    	eventRender: function(event, element){
+			    		var time = "3 PM ";
+			    		element.attr('id', event.id);
+			    		element.find('.fc-event-title').html(time + event.title);
+			    	},
+			    	eventClick: function(event) {
+	    	        if (event.url) {
+	  	            $("#myModal").modal({
+	  	            	remote: "/events/1.html"
+	  	            });
+	  	            return false;
+	    	        }
+		    	    }
+			    })
+			});
+		</script>
 
 </body>
+</html>
