@@ -1,43 +1,81 @@
-﻿using System.Web;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Web;
 using System.Web.Optimization;
 
 namespace ProjectCure.Web
 {
     public class BundleConfig
     {
-        // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bundles"></param>
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            RegisterStyles(bundles);
+            RegisterScripts(bundles);
+        }
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+        /// <summary>
+        /// 
+        /// </summary>
+        private static void RegisterStyles(BundleCollection bundles)
+        {
+            //CSS Styles
+            bundles.Add(new StyleBundle(StyleBundles.Site).Include(
+                        "~/Content/css/bootstrap.css",
+                        "~/Content/css/bootstrap-theme.css",
+                        "~/Content/css/fullcalendar.css",
+                        "~/Content/css/fullcalendar.print.css",
+                        "~/Content/css/Site.css").ForceOrdered());
+        }
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.unobtrusive*",
-                        "~/Scripts/jquery.validate*"));
+        /// <summary>
+        /// 
+        /// </summary>
+        private static void RegisterScripts(BundleCollection bundles)
+        {
+            //Mod
+            bundles.Add(new ScriptBundle(ScriptBundles.Modernizr).Include(
+                        "~/Scripts/core/modernizr-{version}.js"));
+            //Jquery
+            bundles.Add(new ScriptBundle(ScriptBundles.Jquery).Include(
+                        "~/Scripts/jquery/jquery-{version}.js",
+                        "~/Scripts/jquery/jquery-migrate-{version}.js"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            //Bootstrap
+            bundles.Add(new ScriptBundle(ScriptBundles.Bootstrap).Include(
+                        "~/Scripts/bootstrap/bootstrap.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+            //jquery custom plugins
+            bundles.Add(new ScriptBundle(ScriptBundles.JqueryPlugins).Include(
+                "~/Scripts/jquery/plugins/jquery.validate.js",
+                "~/Scripts/jquery/plugins/jquery.unobtrusive-ajax.js",
+                "~/Scripts/jquery/plugins/jquery.validate.unobtrusive.js",
+                "~/Scripts/jquery/plugins/fullcalendar.js",
+                "~/Scripts/jquery/plugins/gcal.js").ForceOrdered());
 
-            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
-                        "~/Content/themes/base/jquery.ui.core.css",
-                        "~/Content/themes/base/jquery.ui.resizable.css",
-                        "~/Content/themes/base/jquery.ui.selectable.css",
-                        "~/Content/themes/base/jquery.ui.accordion.css",
-                        "~/Content/themes/base/jquery.ui.autocomplete.css",
-                        "~/Content/themes/base/jquery.ui.button.css",
-                        "~/Content/themes/base/jquery.ui.dialog.css",
-                        "~/Content/themes/base/jquery.ui.slider.css",
-                        "~/Content/themes/base/jquery.ui.tabs.css",
-                        "~/Content/themes/base/jquery.ui.datepicker.css",
-                        "~/Content/themes/base/jquery.ui.progressbar.css",
-                        "~/Content/themes/base/jquery.ui.theme.css"));
+            //jquery custom
+            bundles.Add(new ScriptBundle(ScriptBundles.Custom).IncludeDirectory(
+                "~/Scripts/custom", "*.js"));
+        }
+    }
+
+    public class AsIsBundleOrderer : IBundleOrderer
+    {
+        public virtual IEnumerable<FileInfo> OrderFiles(BundleContext context, IEnumerable<FileInfo> files)
+        {
+            return files;
+        }
+    }
+
+    internal static class BundleExtensions
+    {
+        public static Bundle ForceOrdered(this Bundle sb)
+        {
+            sb.Orderer = new AsIsBundleOrderer();
+            return sb;
         }
     }
 }

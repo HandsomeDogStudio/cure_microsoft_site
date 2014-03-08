@@ -19,9 +19,8 @@ namespace ProjectCureData.Models.Mapping
             this.ToTable("Events");
             this.Property(t => t.EventId).HasColumnName("EventId");
             this.Property(t => t.EventTitle).HasColumnName("EventTitle");
-            this.Property(t => t.EventDate).HasColumnName("EventDate");
-            this.Property(t => t.EventStart).HasColumnName("EventStart");
-            this.Property(t => t.EventEnd).HasColumnName("EventEnd");
+            this.Property(t => t.EventStartDateTime).HasColumnName("EventStartDateTime").HasColumnType("datetime2");
+            this.Property(t => t.EventEndDateTime).HasColumnName("EventEndDateTime").HasColumnType("datetime2");
             this.Property(t => t.EventStatus).HasColumnName("EventStatus");
             this.Property(t => t.EventManagerId).HasColumnName("EventManagerId");
             this.Property(t => t.EventDescription).HasColumnName("EventDescription");

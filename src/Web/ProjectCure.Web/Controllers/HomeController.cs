@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ProjectCure.Web.Code;
+using ProjectCureData;
 
 namespace ProjectCure.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ProjectCureControllerBase
     {
+	    public HomeController(IRepository repository) : base(repository)
+		{
+		}
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
             return View();
         }
 
@@ -26,6 +32,12 @@ namespace ProjectCure.Web.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult Calendar()
+        {
             return View();
         }
     }
