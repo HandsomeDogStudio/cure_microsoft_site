@@ -46,6 +46,8 @@ namespace ProjectCure.Web.Models
 
         public IEnumerable<Role> Roles { get; set; }
 
+        public IEnumerable<Event> FutureEvents { get; set; }
+
         public IEnumerable<SelectListItem> RoleListItems
         {
             get

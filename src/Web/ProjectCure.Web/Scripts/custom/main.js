@@ -78,6 +78,16 @@ $(function () {
         }
     });
 
+    $("#editUserModal").on("click", "#IsActive", function () {
+        var checked = $(this).prop("checked");
+        var originalChecked = $(this).attr("data-orig") === "true";
+
+        var $events = $("#futureEvents");
+        if ($events.length > 0) {
+            $events.toggle(originalChecked && !checked);
+        }
+    });
+
     //Unfilled Event Notifications
     $("#unfilledEventsNotification").click(function (e) {
 

@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <div class="checkbox">
                         <label>
-                            @Html.DisplayNameFor(m => m.IsActive)&nbsp;@Html.CheckBoxFor(m => m.IsActive)
+                            @Html.DisplayNameFor(m => m.IsActive)&nbsp;@Html.CheckBoxFor(m => m.IsActive, new { data_orig = Model.IsActive.ToString().ToLower() })
                         </label>
                     </div>
                 </div>
@@ -51,6 +51,20 @@
                         </label>
                     </div>
                 </div>
+                @if (Model.FutureEvents != null && Model.FutureEvents.Count() > 0)
+                {
+                <div id="futureEvents" class="form-group" style="display:none;">
+                    <div class="alert alert-info">
+                        <strong>The user will be unassigned from the following events:</strong>
+                        <ul>
+                            @foreach (var e in Model.FutureEvents)
+                            {
+                            <li>@string.Format("{0} - {1:M} {1:t}", e.EventTitle, e.EventStartDateTime)</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

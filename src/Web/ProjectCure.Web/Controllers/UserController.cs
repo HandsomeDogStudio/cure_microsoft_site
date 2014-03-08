@@ -68,6 +68,7 @@ namespace ProjectCure.Web.Controllers
                     Notify10Days = u.UserNotifyTenDays,
                     IsActive = u.UserActiveIn,
                     Roles = Repository.GetRoleList(),
+                    FutureEvents = u.Events.Where(e => e.EventStartDateTime > DateTime.Now).ToList(),
                 });
         }
 
