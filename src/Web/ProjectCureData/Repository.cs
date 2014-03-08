@@ -82,5 +82,13 @@ namespace ProjectCureData
                 return ctx.Events.Include("User").FirstOrDefault(e => e.EventId == eventId);
 	        }
 	    }
+
+	    public void DeleteEventById(int eventId)
+	    {
+	        using (var ctx = new ProjectCureContext())
+	        {
+	            ctx.Events.Remove(GetEventById(eventId));
+	        }
+	    }
 	}
 }
