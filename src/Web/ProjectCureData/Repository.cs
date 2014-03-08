@@ -108,6 +108,19 @@ namespace ProjectCureData
 			}
 		}
 
+		public IEnumerable<User> GetAdminList()
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var users = ctx.Users
+					.Include("Role")
+					.Where(u => u.Role.RoleName.ToUpper().StartsWith("ADMIN"))
+					.ToList();
+
+				return users;
+			}
+		}
+
 		public IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate)
         {
             endDate = endDate.AddDays(1);
@@ -162,17 +175,20 @@ namespace ProjectCureData
 
 	    public void AssignManager(int eventId, string username)
 	    {
-	        using (var ctx = new ProjectCureContext())
+	        using (new ProjectCureContext())
 	        {
 	            Event e = GetEventById(eventId);
                 if(e == null) throw new ArgumentException();
 	            User u = null;
+	            int? managerId = null;
 	            if (username != null)
 	            {
 	                u = GetUserByUserName(username);
                     if(u == null) throw new ArgumentException();
+	                managerId = u.UserId;
 	            }
 	            e.User = u;
+	            e.EventManagerId = managerId;
                 SaveEvent(e);
 	        }
 	    }

@@ -23,6 +23,7 @@ namespace ProjectCure.Web.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.HideLogin = true;
             return View();
         }
 
@@ -56,6 +57,7 @@ namespace ProjectCure.Web.Controllers
 
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ViewBag.HideLogin = true;
 
             return View(model);
         }

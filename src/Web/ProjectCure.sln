@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectCureData", "ProjectCureData\ProjectCureData.csproj", "{E009B670-78E2-418B-909F-53838DE344FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectCure.IntegrationTests", "ProjectCure.IntegrationTests\ProjectCure.IntegrationTests.csproj", "{C85638AF-57DA-4A93-AC39-302F802E08FF}"

@@ -21,6 +21,9 @@ namespace ProjectCure.IntegrationTests
 
 			var roles = repo.GetRoleList();
 			Assert.AreNotEqual(0, roles.Count());
+
+			var admins = repo.GetAdminList();
+			Assert.AreNotEqual(0, admins.Count());
 		}
 	}
 }
