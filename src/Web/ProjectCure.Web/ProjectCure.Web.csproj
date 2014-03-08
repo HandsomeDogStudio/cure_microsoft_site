@@ -192,7 +192,6 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\fullcalendar.css" />
-    <Content Include="Content\css\fullcalendar.print.css" />
     <Content Include="Content\css\bootstrap-custom.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\avatar.png" />
@@ -215,7 +214,6 @@
     <Content Include="Content\js\vendor\fullcalendar\fullcalendar.css" />
     <Content Include="Content\js\vendor\fullcalendar\fullcalendar.js" />
     <Content Include="Content\js\vendor\fullcalendar\fullcalendar.min.js" />
-    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.print.css" />
     <Content Include="Content\js\vendor\fullcalendar\gcal.js" />
     <Content Include="Content\js\vendor\jquery-1.10.1.min.js" />
     <Content Include="Content\js\vendor\modernizr-2.6.2-respond-1.1.0.min.js" />
