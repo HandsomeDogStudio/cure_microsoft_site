@@ -11,7 +11,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Calendar", "Calendar", "Home")</li>
-                <li><a href="/admin/">Admin</a></li>
+                <li>@Html.ActionLink("Admin", "Index", "User")</li>
             </ul>
             @Html.Partial("_LoginPartial")
         </div>

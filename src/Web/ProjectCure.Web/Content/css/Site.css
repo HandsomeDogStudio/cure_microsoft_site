@@ -1,9 +1,4 @@
-﻿
-
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
-html, body {
+﻿html, body {
   height: 100%;
 }
 #wrap {
@@ -42,7 +37,7 @@ footer {
 }
 
 .jumbotron.sign-in {
-  background:url('/images/wood-slates.jpg');
+  background:url('/Content/img/wood-slates.jpg');
   color:#fff;
 }
 

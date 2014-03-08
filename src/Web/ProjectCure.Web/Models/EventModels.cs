@@ -29,4 +29,19 @@ namespace ProjectCure.Web.Models
             Manager = manager;
         }
     }
+
+    public class EditEventModel
+    {
+        public string Title { get; set; }
+
+        public string StartDateTime { get; set; }
+
+        public string EndDateTime { get; set; }
+
+        public string Description { get; set; }
+
+        public string Action { get; set; }
+
+        public int ManagerId { get; set; }
+    }
 }
