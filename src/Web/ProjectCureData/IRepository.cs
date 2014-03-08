@@ -21,6 +21,8 @@ namespace ProjectCureData
 		IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate);
 		Event GetEventById(int eventId);
 		void DeleteEventById(int eventId);
+        void SaveEvent(Event @event);
+	    void AssignManager(int eventId, string username);
 
 		// Template Methods
 		Template GetTemplateByName(string templateName);
