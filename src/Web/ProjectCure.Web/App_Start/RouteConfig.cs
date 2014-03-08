@@ -25,7 +25,7 @@ namespace ProjectCure.Web
             routes.MapRoute(
                 name: "CalendarEvent",
                 url: "events/{id}",
-                defaults: new { controller = "Events", action = "Get" }
+                defaults: new { controller = "Events", action = "Item" }
             );
 
             routes.MapRoute(
