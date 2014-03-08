@@ -20,6 +20,21 @@ namespace ProjectCure.Web.Models
                 }
                 : null;
         }
-        
+
+        public static string FirstEventText(this ProjectCureData.Models.User u)
+        {
+            if (u != null)
+            {
+                var firstEvent = u.Events.FirstOrDefault();
+                if (firstEvent != null)
+                {
+                    return string.Format("{0} - {1:M} {1:t}", firstEvent.EventTitle, firstEvent.EventStartDateTime);
+                }
+            }
+            return "";
+            return u != null
+                ? string.Format("", u.Events.FirstOrDefault())
+                : "";
+        }
     }
 }

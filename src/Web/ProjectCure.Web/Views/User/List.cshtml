@@ -25,7 +25,7 @@
             <td>@u.UserFirstName @u.UserLastName</td>
             <td>@u.UserEmail</td>
             <td>@u.Role.RoleName</td>
-            <td><!-- TODO: display next event name, date, and start time like this: HCA - May 5th 3:00PM --></td>
+            <td>@u.FirstEventText()</td>
             <td>
                 @using (Html.BeginForm("ResetPassword", "User", new { id = u.UserId }))
                 {
