@@ -97,6 +97,7 @@ namespace ProjectCureData
             }
         }
 
+
 		public Template GetTemplateByName(string templateName)
 		{
 			using (var ctx = new ProjectCureContext())
@@ -104,5 +105,22 @@ namespace ProjectCureData
 				return ctx.Templates.SingleOrDefault(t => t.TemplateName == templateName);
 			}
 		}
+
+	    public Event GetEventById(int eventId)
+	    {
+	        using (var ctx = new ProjectCureContext())
+	        {
+                return ctx.Events.Include("User").FirstOrDefault(e => e.EventId == eventId);
+	        }
+	    }
+
+	    public void DeleteEventById(int eventId)
+	    {
+	        using (var ctx = new ProjectCureContext())
+	        {
+	            ctx.Events.Remove(GetEventById(eventId));
+	        }
+	    }
+>>>>>>> 9811297a05e8aa256fa28ce9fa1e76475aa7686c
 	}
 }

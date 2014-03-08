@@ -3,25 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ProjectCure.Web.Code;
+using ProjectCure.Web.Models;
 using ProjectCureData;
+using ProjectCureData.Models;
 
 namespace ProjectCure.Web.Controllers
 {
-    public class EventsController : Controller
+    public class EventsController : ProjectCureControllerBase
     {
+        public EventsController(IRepository repository)
+            : base(repository)
+        {
+        }
+
         //
         // GET: /Calendar/
 
-        public JsonResult Index(DateTime startDate, DateTime endDate)
+        public JsonResult List(DateTime startDate, DateTime endDate)
         {
             var results = new List<object>();
-            var repository = new Repository();
-            foreach (var e in repository.GetEventsBetweenDates(startDate, endDate))
+            foreach (var e in Repository.GetEventsBetweenDates(startDate, endDate))
             {
                 results.Add(new
                 {
                     id = e.EventId,
-                    url = Url.RouteUrl(new { id = e.EventId }),
+                    url = Url.RouteUrl("CalendarEvent", new { id = e.EventId }),
                     title = e.EventTitle,
                     start = e.EventStartDateTime.ToString("O"),
                     end = e.EventEndDateTime.ToString("O"),
@@ -32,12 +39,15 @@ namespace ProjectCure.Web.Controllers
             return Json(results, JsonRequestBehavior.AllowGet);
         }
 
-        public PartialViewResult Index(int id)
+        public PartialViewResult Item(int id)
         {
-            return PartialView("", new
+            Event @event = Repository.GetEventById(id);
+            string managerName = string.Empty;
+            if (@event.User != null)
             {
-                
-            });
+                managerName = @event.User.UserFirstName + " " + @event.User.UserLastName;
+            }
+            return PartialView("Details", new EventDetailsModel(@event.EventId, @event.EventTitle, @event.EventDescription, @event.EventStartDateTime.ToString("g"), @event.EventEndDateTime.ToString("g"), managerName));
         }
 
 //        [HttpPost]
@@ -47,13 +57,14 @@ namespace ProjectCure.Web.Controllers
 //        }
 //
 //        [HttpPut]
-//        public void Index(string id, EventDTO input)
+//        public void Item(string id, EventDTO input)
 //        {
 //        }
 //
-//        [HttpDelete]
-//        public void Index(string id)
-//        {
-//        }
+        [HttpDelete]
+        public void Delete(int id)
+        {
+            Repository.DeleteEventById(id);
+        }
     }
 }

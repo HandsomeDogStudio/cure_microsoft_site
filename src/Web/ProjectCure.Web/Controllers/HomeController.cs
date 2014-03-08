@@ -14,6 +14,7 @@ namespace ProjectCure.Web.Controllers
 		{
 		}
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
@@ -34,6 +35,7 @@ namespace ProjectCure.Web.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Calendar()
         {
             return View();

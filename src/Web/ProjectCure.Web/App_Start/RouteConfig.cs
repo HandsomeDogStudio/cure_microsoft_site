@@ -17,9 +17,15 @@ namespace ProjectCure.Web
             routes.IgnoreRoute("{resource}.js/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Calendar",
+                name: "CalendarEvents",
+                url: "events/",
+                defaults: new { controller = "Events", action = "List" }
+            );
+
+            routes.MapRoute(
+                name: "CalendarEvent",
                 url: "events/{id}",
-                defaults: new { controller = "Events", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Events", action = "Item" }
             );
 
             routes.MapRoute(
