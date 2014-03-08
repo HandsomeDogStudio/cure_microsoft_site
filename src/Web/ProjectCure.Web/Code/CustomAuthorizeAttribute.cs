@@ -19,7 +19,7 @@ namespace ProjectCure.Web.Code
         {
             if (httpContext.Request.IsAuthenticated)
             {
-                if (!string.IsNullOrEmpty(Roles) && CurrentUser.IsInRole(Roles))
+                if (string.IsNullOrEmpty(Roles) || CurrentUser.IsInRole(Roles))
                 {
                     return true;
                     // base.OnAuthorization(filterContext); //returns to login url
@@ -39,13 +39,19 @@ namespace ProjectCure.Web.Code
             }
             else
             {
-                filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary
+                var route = filterContext.HttpContext.Request.IsAuthenticated
+                    ? new RouteValueDictionary
                         {
                             {"action", "Index"},
                             {"controller", "Home"}
                         }
-                    );
+                        : new RouteValueDictionary
+                        {
+                            {"action", "Login"},
+                            {"controller", "Account"}
+                        };
+                
+                    filterContext.Result = new RedirectToRouteResult(route);
             }
         }
         
