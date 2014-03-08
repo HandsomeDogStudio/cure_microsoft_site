@@ -61,8 +61,13 @@
     <Compile Include="ConnectivityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SHA256Test.cs" />
+    <Compile Include="TestEmailNotifier.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ProjectCure.Web\ProjectCure.Web.csproj">
+      <Project>{73F69F0B-4DF5-482D-8CDF-5FAD16DAC197}</Project>
+      <Name>ProjectCure.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProjectCureData\ProjectCureData.csproj">
       <Project>{e009b670-78e2-418b-909f-53838de344fc}</Project>
       <Name>ProjectCureData</Name>
