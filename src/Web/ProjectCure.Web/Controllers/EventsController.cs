@@ -1,4 +1,6 @@
-﻿using System.Web.Routing;
+﻿using System.Globalization;
+using System.Web.Routing;
+using System.Web.UI.WebControls.WebParts;
 using ProjectCure.Web.Code;
 using ProjectCure.Web.Models;
 using ProjectCureData;
@@ -46,6 +48,11 @@ namespace ProjectCure.Web.Controllers
             return Json(results, JsonRequestBehavior.AllowGet);
         }
 
+        public PartialViewResult Create(DateTime date)
+        {
+            return PartialView("Create", new CreateEventModel(date.ToString("d"), Repository.GetUserList()));
+        }
+
         public PartialViewResult Item(int id)
         {
             Event @event = Repository.GetEventById(id);
@@ -64,14 +71,20 @@ namespace ProjectCure.Web.Controllers
         {
             if (HttpContext.User.IsInRole("Admin"))
             {
-                var manager = Repository.GetUserById(input.ManagerId);
+                User manager = null;
+                if (input.ManagerId != null)
+                {
+                    manager = Repository.GetUserById(input.ManagerId.Value);
+                }
+
                 var e = new Event
                 {
                     EventDescription = input.Description,
-                    EventStartDateTime = DateTime.Parse(input.StartDateTime),
-                    EventEndDateTime = DateTime.Parse(input.EndDateTime),
+                    EventStartDateTime = DateTime.ParseExact(input.Date + " " + input.StartTime, "M/d/yyyy HH:mm", CultureInfo.InvariantCulture),
+                    EventEndDateTime = DateTime.ParseExact(input.Date + " " + input.EndTime, "M/d/yyyy HH:mm", CultureInfo.InvariantCulture),
                     EventTitle = input.Title,
-                    User = manager
+                    User = manager,
+                    EventManagerId = input.ManagerId
                 };
                 Repository.SaveEvent(e);
             }
@@ -91,14 +104,19 @@ namespace ProjectCure.Web.Controllers
                 case EventEditAction.Edit:
                     if (HttpContext.User.IsInRole("Admin"))
                     {
-                        var manager = Repository.GetUserById(input.ManagerId);
-                        var e = Repository.GetEventById(id);
+                        User manager = null;
+                        if (input.ManagerId != null)
+                        {
+                            manager = Repository.GetUserById(input.ManagerId.Value);
+                        }
 
+                        Event e = Repository.GetEventById(id);
                         e.EventDescription = input.Description;
-                        e.EventStartDateTime = DateTime.Parse(input.StartDateTime);
-                        e.EventEndDateTime = DateTime.Parse(input.EndDateTime);
+                        e.EventStartDateTime = DateTime.ParseExact(input.Date + " " + input.StartTime, "M/d/yyyy HH:mm", CultureInfo.InvariantCulture);
+                        e.EventEndDateTime = DateTime.ParseExact(input.Date + " " + input.EndTime, "M/d/yyyy HH:mm", CultureInfo.InvariantCulture);
                         e.EventTitle = input.Title;
                         e.User = manager;
+                        e.EventManagerId = input.ManagerId;
 
                         Repository.SaveEvent(e);
                     }

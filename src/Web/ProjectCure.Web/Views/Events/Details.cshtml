@@ -4,7 +4,14 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title" id="myModalLabel">@Model.Title</h4>
+        <h4 class="modal-title" id="myModalLabel">
+          @Model.Title
+            
+          @if (Model.IsAssigned)
+          {
+              <div>(Leader: @Model.Manager)</div>
+          }
+        </h4>
     </div>
     <form action="@Url.Content("~/events/" + Model.Id)" id="eventForm">
       <div class="modal-body">
@@ -12,22 +19,27 @@
         <h4>@Model.Description</h4>
       </div>
 
-      <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          @if (Model.IsMine)
-          {
-              <input type="hidden" name="Action" value="Unassign"/>
-              <button type="button" class="btn btn-warning claim" data-confirm="Are you sure you want to withdraw your reservation?">I Cannot Lead</button>
-          }
-          else if (Model.IsAssigned)
-          {
-          }
-          else
-          {
-              <input type="hidden" name="Action" value="Assign"/>
-              <button type="button" class="btn btn-primary claim" data-confirm="Are you sure you want to lead this group?">I Will Lead</button>
-          }
-      </div>
+        <div class="modal-footer">
+            @if (User.IsInRole("Admin"))
+            {
+                <button type="button" class="btn btn-danger cancel" data-confirm="Are you sure you want to cancel this event?" style="float: left">Cancel this Event</button>
+            }
+            
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            @if (Model.IsMine)
+            {
+                <input type="hidden" name="Action" value="Unassign"/>
+                <button type="button" class="btn btn-warning claim" data-confirm="Are you sure you want to withdraw your reservation?">I Cannot Lead</button>
+            }
+            else if (Model.IsAssigned)
+            {
+            }
+            else
+            {
+                <input type="hidden" name="Action" value="Assign"/>
+                <button type="button" class="btn btn-primary claim" data-confirm="Are you sure you want to lead this group?">I Will Lead</button>
+            }
+        </div>
     </form>
   </div>
 </div>
