@@ -81,10 +81,20 @@ namespace ProjectCureData
 		{
 			using (var ctx = new ProjectCureContext())
 			{
-				var user = ctx.Users
+				var users = ctx.Users
 					.Include("Role")
 					.ToList();
-				return user;
+
+				foreach (var user in users.Where(u => u.UserActiveIn))
+				{
+					var closureUser = user;
+					user.Events = ctx.Events
+						.Where(e => e.User.UserId == closureUser.UserId && e.EventStartDateTime > DateTime.Now)
+						.OrderBy(e => e.EventStartDateTime)
+						.Take(1).ToList();
+				}
+
+				return users;
 			}
 		}
 
