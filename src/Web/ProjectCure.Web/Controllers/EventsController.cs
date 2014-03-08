@@ -33,7 +33,7 @@ namespace ProjectCure.Web.Controllers
                     title = e.EventTitle,
                     start = e.EventStartDateTime.ToString("O"),
                     end = e.EventEndDateTime.ToString("O"),
-                    className = e.User == null ? "available" : (e.EventManagerId == currentUser.UserId ? "owner" : "assigned")
+                    className = e.User == null ? "available" : (e.User.UserId == currentUser.UserId ? "owner" : "assigned")
                 });
             }
 
@@ -60,7 +60,6 @@ namespace ProjectCure.Web.Controllers
                 EventDescription = input.Description,
                 EventStartDateTime = DateTime.Parse(input.StartDateTime),
                 EventEndDateTime = DateTime.Parse(input.EndDateTime),
-                EventStatus = manager != null,
                 EventTitle = input.Title,
                 User = manager
             };
@@ -70,23 +69,29 @@ namespace ProjectCure.Web.Controllers
         [HttpPut]
         public void Item(int id, EditEventModel input)
         {
-            if (!string.IsNullOrEmpty(input.Ownership))
+            switch (input.Action)
             {
-                Repository.AssignManager(id, input.Ownership == "assign" ? HttpContext.User.Identity.Name : null);
-            }
-            else
-            {
-                var manager = Repository.GetUserById(input.ManagerId);
-                var e = Repository.GetEventById(id);
+                case "assign":
+                    Repository.AssignManager(id, HttpContext.User.Identity.Name);
+                    break;
+                case "unassign":
+                    Repository.AssignManager(id, null);
+                    break;
+                case "edit":
+                    if (HttpContext.User.IsInRole("Admin"))
+                    {
+                        var manager = Repository.GetUserById(input.ManagerId);
+                        var e = Repository.GetEventById(id);
 
-                e.EventDescription = input.Description;
-                e.EventStartDateTime = DateTime.Parse(input.StartDateTime);
-                e.EventEndDateTime = DateTime.Parse(input.EndDateTime);
-                e.EventStatus = false;
-                e.EventTitle = input.Title;
-                e.User = manager;
+                        e.EventDescription = input.Description;
+                        e.EventStartDateTime = DateTime.Parse(input.StartDateTime);
+                        e.EventEndDateTime = DateTime.Parse(input.EndDateTime);
+                        e.EventTitle = input.Title;
+                        e.User = manager;
 
-                Repository.SaveEvent(e);
+                        Repository.SaveEvent(e);
+                    }
+                    break;
             }
         }
 

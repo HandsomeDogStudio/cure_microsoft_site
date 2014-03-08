@@ -40,7 +40,7 @@ namespace ProjectCure.Web.Models
 
         public string Description { get; set; }
 
-        public string Ownership { get; set; }
+        public string Action { get; set; }
 
         public int ManagerId { get; set; }
     }
