@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmailNotifier.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Mapping\EventMap.cs" />
