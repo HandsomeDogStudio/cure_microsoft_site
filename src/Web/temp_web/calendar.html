@@ -103,31 +103,29 @@
     	    }
 		    })
 
-		    $(document).on('click', '.claim', function(event) {
-		        event.preventDefault();
+        $(document).on("click", "#eventForm", function() {
+            var choice = confirm(this.getAttribute('data-confirm'), 'yes', 'no');
+            if(choice){
+              var url = "http://nothing"; // the script where you handle the form input.
 
-		        var choice = confirm(this.getAttribute('data-confirm'), 'yes', 'no');
+              $.ajax({
+                 type: "POST",
+                 url: url,
+                 data: $("#eventForm").serialize(), // serializes the form's elements.
+                 success: function(data)
+                 {
+                    alert(data); // show response from the php script.
 
-		        if (choice) {
-		        	$(this).submit(function() {
+                    // change color of event
+                 },
+                 error: function(data){
+                  alert("FAILED!");
+                 }
+               });
+            }
+         		event.preventDefault(); // avoid to execute the actual submit of the form.
+        });
 
-		        	    var url = "path/to/your/script.php"; // the script where you handle the form input.
-
-		        	    $.ajax({
-		        	           type: "POST",
-		        	           url: url,
-		        	           data: $("#idForm").serialize(), // serializes the form's elements.
-		        	           success: function(data)
-		        	           {
-		        	               alert(data); // show response from the php script.
-		        	               // change color of event
-		        	           }
-		        	         });
-
-		        	    return false; // avoid to execute the actual submit of the form.
-		        	});
-		        }
-		    });
 			});
 		</script>
 

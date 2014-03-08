@@ -188,7 +188,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap-theme.css" />
+    <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\css\fullcalendar.print.css" />
     <Content Include="Content\css\bootstrap-custom.css" />
@@ -202,10 +204,22 @@
     <Content Include="Content\img\icons\apple-touch-icon-precomposed.png" />
     <Content Include="Content\img\icons\apple-touch-icon.png" />
     <Content Include="Content\img\icons\favicon.ico" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\js\main.js" />
     <Content Include="Content\img\pc-logo%402x.png" />
     <Content Include="Content\img\pc-logo-footer%402x.png" />
     <Content Include="Content\img\pc-logo-footer.png" />
     <Content Include="Content\img\pc-logo.png" />
+    <Content Include="Content\js\vendor\bootstrap.js" />
+    <Content Include="Content\js\vendor\bootstrap.min.js" />
+    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.css" />
+    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.js" />
+    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.print.css" />
+    <Content Include="Content\js\vendor\fullcalendar\gcal.js" />
+    <Content Include="Content\js\vendor\jquery-1.10.1.min.js" />
+    <Content Include="Content\js\vendor\modernizr-2.6.2-respond-1.1.0.min.js" />
+    <Content Include="Content\js\vendor\moment.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -286,6 +300,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Events\Create.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
