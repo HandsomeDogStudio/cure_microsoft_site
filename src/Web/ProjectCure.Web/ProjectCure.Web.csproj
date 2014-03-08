@@ -186,9 +186,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap-theme.css" />
+    <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\css\fullcalendar.print.css" />
+    <Content Include="Content\css\main.css" />
+    <Content Include="Content\js\main.js" />
+    <Content Include="Content\js\vendor\bootstrap.js" />
+    <Content Include="Content\js\vendor\bootstrap.min.js" />
+    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.css" />
+    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.js" />
+    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.print.css" />
+    <Content Include="Content\js\vendor\fullcalendar\gcal.js" />
+    <Content Include="Content\js\vendor\jquery-1.10.1.min.js" />
+    <Content Include="Content\js\vendor\modernizr-2.6.2-respond-1.1.0.min.js" />
+    <Content Include="Content\js\vendor\moment.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

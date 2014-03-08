@@ -30,7 +30,7 @@ namespace ProjectCure.Web.Models
         
         [Required]
         [Display(Name = "Role")]
-        public int RoleId { get set; }
+        public int RoleId { get; set; }
         
         [Display(Name = "Is Active?")]
         public bool IsActive { get; set; }
