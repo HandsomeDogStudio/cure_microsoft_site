@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ProjectCureData.Models;
@@ -81,10 +82,42 @@ namespace ProjectCureData
 		{
 			using (var ctx = new ProjectCureContext())
 			{
-				var user = ctx.Users
+				var users = ctx.Users
 					.Include("Role")
 					.ToList();
-				return user;
+
+				foreach (var user in users.Where(u => u.UserActiveIn))
+				{
+					var closureUser = user;
+					user.Events = ctx.Events
+						.Where(e => e.User.UserId == closureUser.UserId && e.EventStartDateTime > DateTime.Now)
+						.OrderBy(e => e.EventStartDateTime)
+						.Take(1).ToList();
+				}
+
+				return users;
+			}
+		}
+
+		public IEnumerable<Role> GetRoleList()
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var roles = ctx.Roles.ToList();
+				return roles;
+			}
+		}
+
+		public IEnumerable<User> GetAdminList()
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var users = ctx.Users
+					.Include("Role")
+					.Where(u => u.Role.RoleName.ToUpper().StartsWith("ADMIN"))
+					.ToList();
+
+				return users;
 			}
 		}
 
@@ -142,17 +175,20 @@ namespace ProjectCureData
 
 	    public void AssignManager(int eventId, string username)
 	    {
-	        using (var ctx = new ProjectCureContext())
+	        using (new ProjectCureContext())
 	        {
 	            Event e = GetEventById(eventId);
                 if(e == null) throw new ArgumentException();
 	            User u = null;
+	            int? managerId = null;
 	            if (username != null)
 	            {
 	                u = GetUserByUserName(username);
                     if(u == null) throw new ArgumentException();
+	                managerId = u.UserId;
 	            }
 	            e.User = u;
+	            e.EventManagerId = managerId;
                 SaveEvent(e);
 	        }
 	    }
