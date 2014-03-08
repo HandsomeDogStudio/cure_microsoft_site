@@ -11,7 +11,7 @@ namespace ProjectCure.Web.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Email")]
         public string UserName { get; set; }
 
         [Required]
@@ -23,7 +23,7 @@ namespace ProjectCure.Web.Models
     public class ChangePasswordModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [Display(Name = "Email")]
         public string UserName { get; set; }
 
         [Required]
@@ -41,5 +41,7 @@ namespace ProjectCure.Web.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmNewPassword { get; set; }
+
+        public bool PasswordChanged { get; set; }
     }
 }

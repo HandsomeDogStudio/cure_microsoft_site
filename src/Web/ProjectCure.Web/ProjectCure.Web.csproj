@@ -196,6 +196,7 @@
     <Content Include="Content\css\bootstrap-custom.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\avatar.png" />
+    <Content Include="Content\img\favicon.ico" />
     <Content Include="Content\img\icons\apple-touch-icon-114x114-precomposed.png" />
     <Content Include="Content\img\icons\apple-touch-icon-144x144-precomposed.png" />
     <Content Include="Content\img\icons\apple-touch-icon-57x57-precomposed.png" />
@@ -205,6 +206,8 @@
     <Content Include="Content\img\icons\favicon.ico" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\js\main.js" />
+    <Content Include="Content\img\pc-logo%402x.png" />
+    <Content Include="Content\img\pc-logo.png" />
     <Content Include="Content\js\vendor\bootstrap.js" />
     <Content Include="Content\js\vendor\bootstrap.min.js" />
     <Content Include="Content\js\vendor\fullcalendar\fullcalendar.css" />
@@ -326,7 +329,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

@@ -31,11 +31,23 @@ namespace ProjectCure.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult Add()
+        {
+            return PartialView("Edit",
+                new EditUserModel
+                {
+                    IsNew = true,
+                    IsActive = true,
+                    Roles = Repository.GetRoleList(),
+                });
+        }
+
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             var u = Repository.GetUserById(id);
 
-            return PartialView(
+            return PartialView("Edit",
                 new EditUserModel
                 {
                     UserId = u.UserId,
@@ -67,15 +79,41 @@ namespace ProjectCure.Web.Controllers
                     UserNotifyTenDays = model.Notify10Days,
                 };
 
-                //TODO: if inactivating, cancel associated future events
-
+                var existingUser = Repository.GetUserById(user.UserId);
 
                 Repository.SaveUser(user);
+
+                var notifier = new EmailNotifier();
+                
+                if (model.IsNew)
+                {
+                    //set password for new user and notify via email
+                    var newPassword = GetNewPassword();
+                    user.UserPassword = newPassword;
+                    Repository.UpdatePassword(user);
+
+                    notifier.GiveTemporaryPasswordNotification(Repository, user.UserEmail, newPassword);
+                }
+                else if (!model.IsNew && !user.UserActiveIn)
+                {
+                    if (existingUser != null && existingUser.UserActiveIn)
+                    {
+                        //unassign from events, and send notifications
+                    
+                        //remove manager from future events if being inactivated
+                        var unassociatedEvents = Repository.RemoveManagerFromEvents(user.UserId);
+
+                        foreach (var evt in unassociatedEvents)
+                        {
+                            notifier.EventCancellationNotification(Repository, evt, user.UserEmail);
+                        }
+                    }
+                }
             }
 
             model.Roles = Repository.GetRoleList();
 
-            return PartialView(model);
+            return PartialView("Edit", model);
         }
 
         [HttpPost]
@@ -86,17 +124,14 @@ namespace ProjectCure.Web.Controllers
             var user = Repository.GetUserById(id);
             if (user != null)
             {
-                var passwordGenerator = new PasswordGenerator();
-                var tempPassword = passwordGenerator.GeneratePassword(10);
-
-                user.UserPassword = tempPassword;
-
+                var newPassword = GetNewPassword();
+                user.UserPassword = newPassword;
                 Repository.UpdatePassword(user);
 
                 success = true;
 
                 var notifier = new EmailNotifier();
-//                notifier.GiveTemporaryPassword(Repository, user.UserEmail, tempPassword);
+                notifier.GiveTemporaryPasswordNotification(Repository, user.UserEmail, newPassword);
 
                 return Json(new
                 {
@@ -108,6 +143,13 @@ namespace ProjectCure.Web.Controllers
             }
 
             return Json(new { success });
+        }
+
+        private string GetNewPassword(int length = 10)
+        {
+            var passwordGenerator = new PasswordGenerator();
+            var tempPassword = passwordGenerator.GeneratePassword(length);
+            return tempPassword;
         }
     }
 }
