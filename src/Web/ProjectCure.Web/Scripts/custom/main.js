@@ -15,8 +15,12 @@ $(function () {
             url: $this.attr("action")
         }).then(function (response, textStatus, jqXHR) {
             //update modal contents with response, hide modal
-            $("#editUserModal").empty().html(response).modal("hide");
-
+            var $modal = $("#editUserModal");
+            $modal.empty().html(response);
+            
+            if ($modal.find("div.validation-summary-errors ul li").length === 0) {
+                $modal.modal("hide");
+            }
         }, function (jqXHR, textStatus, errorThrown) {
             alert(errorThrown);
         });

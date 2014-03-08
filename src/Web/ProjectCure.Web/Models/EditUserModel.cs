@@ -17,6 +17,7 @@ namespace ProjectCure.Web.Models
         [Required]
         [DataType(DataType.EmailAddress)]
         [StringLength(256)]
+        [EmailAddress]
         [Display(Name = "Email")]
         public string UserName { get; set; }
 
