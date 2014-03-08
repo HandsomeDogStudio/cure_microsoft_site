@@ -189,6 +189,7 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\css\fullcalendar.print.css" />
+    <Content Include="Content\css\bootstrap-custom.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -206,6 +207,8 @@
     <Content Include="Scripts\jquery\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery\plugins\gcal.js" />
     <Content Include="Scripts\core\modernizr-2.6.2.js" />
+    <Content Include="Scripts\core\respond.js" />
+    <Content Include="Scripts\core\respond.matchmedia.addListener.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -215,7 +218,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Content\css\Site.css" />
+    <Content Include="Content\css\site.css" />
     <Content Include="Content\img\accent.png" />
     <Content Include="Content\img\bullet.png" />
     <Content Include="Content\img\heroAccent.png" />

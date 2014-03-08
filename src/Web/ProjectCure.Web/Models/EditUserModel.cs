@@ -27,10 +27,10 @@ namespace ProjectCure.Web.Models
         [StringLength(50)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        
+
         [Required]
         [Display(Name = "Role")]
-        public int RoleId { get set; }
+        public int RoleId { get; set; }
         
         [Display(Name = "Is Active?")]
         public bool IsActive { get; set; }
