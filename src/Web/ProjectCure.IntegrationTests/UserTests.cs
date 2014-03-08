@@ -36,7 +36,8 @@ namespace ProjectCure.IntegrationTests
 		public void RemoveManagerFromFutureEvents()
 		{
 			var repo = new Repository();
-			repo.RemoveManagerFromEvents(2);
+			var events = repo.RemoveManagerFromEvents(2);
+			Assert.AreNotEqual(0, events.Count());
 		}
 	}
 }
