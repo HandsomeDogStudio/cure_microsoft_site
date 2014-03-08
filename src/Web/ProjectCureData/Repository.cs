@@ -15,7 +15,7 @@ namespace ProjectCureData
 		{
 			using (var ctx = new ProjectCureContext())
 			{
-				var user = ctx.Users.First(u => u.UserEmail == userName);
+				var user = ctx.Users.FirstOrDefault(u => u.UserEmail == userName);
 				if (user == null)
 					return false;
 
@@ -63,7 +63,7 @@ namespace ProjectCureData
 		{
 			using (var ctx = new ProjectCureContext())
 			{
-				var userExists = ctx.Users.Any(u => u.UserEmail == user.UserEmail);
+				var userExists = ctx.Users.Any(u => u.UserId == user.UserId);
 				if (userExists)
 				{
 					ctx.Entry(user).State = EntityState.Modified;
