@@ -20,13 +20,13 @@
     <meta name="viewport" content="width=device-width" />
     @Styles.Render(StyleBundles.Site)
     @Scripts.Render(ScriptBundles.Modernizr)
+    @Scripts.Render(ScriptBundles.Jquery, ScriptBundles.Bootstrap, ScriptBundles.JqueryPlugins, ScriptBundles.Custom)
     @RenderSection("style", required: false)
 </head>
 <body>
     @Html.Partial("_Header")
     @RenderBody()
     @Html.Partial("_Footer")
-    @Scripts.Render(ScriptBundles.Jquery, ScriptBundles.Bootstrap, ScriptBundles.JqueryPlugins, ScriptBundles.Custom)
     @RenderSection("scripts", required: false)
 </body>
 </html>
