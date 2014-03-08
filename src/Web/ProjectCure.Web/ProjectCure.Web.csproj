@@ -182,6 +182,7 @@
     <Compile Include="Models\EditUserModel.cs" />
     <Compile Include="Models\EventModels.cs" />
     <Compile Include="Models\Extensions.cs" />
+    <Compile Include="Models\PasswordGenerator.cs" />
     <Compile Include="Models\UserListModel.cs" />
     <Compile Include="Models\UserSerializable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

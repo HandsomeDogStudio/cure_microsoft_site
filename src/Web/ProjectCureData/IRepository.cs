@@ -25,6 +25,7 @@ namespace ProjectCureData
 		void DeleteEventById(int eventId);
         void SaveEvent(Event @event);
 	    void AssignManager(int eventId, string username);
+		void RemoveManagerFromEvents(int userId);
 
 		// Template Methods
 		Template GetTemplateByName(string templateName);

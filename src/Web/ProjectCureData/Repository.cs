@@ -41,6 +41,7 @@ namespace ProjectCureData
 			{
 				var user = ctx.Users
 					.Include("Role")
+					.Include("Events")
 					.FirstOrDefault(u => u.UserId == userId);
 				return user;
 			}
@@ -130,6 +131,17 @@ namespace ProjectCureData
             }
         }
 
+
+		public void RemoveManagerFromEvents(int userId)
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var userEvents = ctx.Events.Where(e => e.User.UserId == userId && e.EventStartDateTime > DateTime.Now);
+				foreach (var userEvent in userEvents)
+					userEvent.EventManagerId = null;
+				ctx.SaveChanges();
+			}
+		}
 
 		public Template GetTemplateByName(string templateName)
 		{

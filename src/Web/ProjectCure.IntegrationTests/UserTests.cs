@@ -24,6 +24,19 @@ namespace ProjectCure.IntegrationTests
 
 			var admins = repo.GetAdminList();
 			Assert.AreNotEqual(0, admins.Count());
+
+			var user2 = repo.GetUserById(1);
+			Assert.AreNotEqual(0, user2.Events.Count());
+
+			var user3 = repo.GetUserById(3);
+			Assert.AreEqual(0, user3.Events.Count());
+		}
+
+		[TestMethod]
+		public void RemoveManagerFromFutureEvents()
+		{
+			var repo = new Repository();
+			repo.RemoveManagerFromEvents(2);
 		}
 	}
 }
