@@ -5,6 +5,8 @@ using System.Net.Mail;
 using System.Web;
 using ProjectCureData;
 using ProjectCureData.Models;
+using System.Configuration;
+using System.Net.Configuration;
 
 namespace ProjectCure.Web.Controllers
 {
@@ -17,6 +19,7 @@ namespace ProjectCure.Web.Controllers
         private bool useDefaultCredentials;
         private string username;
         private string password;
+        private SmtpSection section;
 
         /// <summary>
         /// The default constructor is using gmail, donotreply.projectcure@gmail.com (password: AnnieEllement)
@@ -24,16 +27,17 @@ namespace ProjectCure.Web.Controllers
         public EmailNotifier()
         {
             //These are the default values being used (also for testing purposes)
-            host = "smtp.gmail.com";
-            port = 587;
-            enableSSL = true;
-            useDefaultCredentials = false;
-            username = "donotreply.projectcure@gmail.com";
-            password = "AnnieEllement";
+            //host = "smtp.gmail.com";
+            //port = 587;
+            //enableSSL = true;
+            //useDefaultCredentials = false;
+            //username = "donotreply.projectcure@gmail.com";
+            //password = "AnnieEllement";
 
 
             //Create the smtp client with info given above
             CreateSmtpClient();
+            SetSection();
         }
 
         /// <summary>
@@ -44,6 +48,7 @@ namespace ProjectCure.Web.Controllers
         {
             //Create the smtp client with info given above
             this.smtpClient = smtpClient;
+            SetSection();
         }
 
         public void GiveTemporaryPasswordNotification(IRepository repository, string recipientAddress, string tempPassword)
@@ -60,7 +65,11 @@ namespace ProjectCure.Web.Controllers
 
             //Send the email
             SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
+        }
 
+        private void SetSection()
+        {
+            section = ConfigurationManager.GetSection("system.net/mailSettings/smtp") as SmtpSection;
         }
 
         public void PasswordChangeConfirmationNotification(IRepository repository, string recipientAddress)
@@ -108,11 +117,11 @@ namespace ProjectCure.Web.Controllers
         {
             smtpClient = new SmtpClient
             {
-                Host = host,
-                Port = port,
-                EnableSsl = enableSSL,
-                UseDefaultCredentials = useDefaultCredentials,
-                Credentials = new System.Net.NetworkCredential(username, password)
+                //Host = host,
+                //Port = port,
+                //EnableSsl = enableSSL,
+                //UseDefaultCredentials = useDefaultCredentials,
+                //Credentials = new System.Net.NetworkCredential(username, password)
             };
         }
 
@@ -127,7 +136,14 @@ namespace ProjectCure.Web.Controllers
         private void SendNotification(List<string> recipientAddresses, string body, string subject)
         {
 
-            var email = new MailMessage("donotreply@projectcure.org", recipientAddresses.First());
+            var email = new MailMessage()
+            {
+                To = { recipientAddresses.First() }
+            };
+
+            //Add BCC for emails sent
+            if (section != null)
+                email.Bcc.Add(section.From);
 
             //Remove the already used email address from the array
             recipientAddresses.Remove(recipientAddresses.First());
@@ -142,7 +158,7 @@ namespace ProjectCure.Web.Controllers
 
             email.Subject = subject;
             email.Body = body;
-                
+
             smtpClient.Send(email);
         }
     }
