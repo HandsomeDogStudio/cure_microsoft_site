@@ -55,7 +55,7 @@ namespace ProjectCure.Web.Controllers
             GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
 
             //Fill in the dynamic variables from template
-            templateBody.Replace("{temp password}", tempPassword);
+            templateBody.Replace("{new password}", tempPassword);
 
             //Send the email
             SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
@@ -77,9 +77,9 @@ namespace ProjectCure.Web.Controllers
             SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
         }
 
-        public void EventCancellationNotification(IRepository repository, string recipientAddress)
+        public void EventCancellationNotification(IRepository repository, Event cancelledEvent, string recipientAddress)
         {
-            string templateName = "Password Change Confirmation Email";
+            string templateName = "Cancellation Email";
             string templateBody;
             string templateSubject;
 
@@ -87,6 +87,10 @@ namespace ProjectCure.Web.Controllers
 
             //Fill in the dynamic variables from template
             templateBody.Replace("{name}", GetFullNameFromEmailAddress(repository, recipientAddress));
+            templateBody.Replace("{title}", cancelledEvent.EventTitle);
+            templateBody.Replace("{date}", cancelledEvent.EventStartDateTime.Date.ToShortDateString());
+            templateBody.Replace("{start time}", cancelledEvent.EventStartDateTime.ToShortTimeString());
+            templateBody.Replace("{end time}", cancelledEvent.EventEndDateTime.ToShortTimeString());
 
             //Send the email
             SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
