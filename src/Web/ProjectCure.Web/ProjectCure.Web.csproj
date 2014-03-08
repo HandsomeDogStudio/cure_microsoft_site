@@ -194,6 +194,7 @@
     <Content Include="Content\css\bootstrap-custom.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\avatar.png" />
+    <Content Include="Content\img\favicon.ico" />
     <Content Include="Content\img\icons\apple-touch-icon-114x114-precomposed.png" />
     <Content Include="Content\img\icons\apple-touch-icon-144x144-precomposed.png" />
     <Content Include="Content\img\icons\apple-touch-icon-57x57-precomposed.png" />
@@ -201,6 +202,8 @@
     <Content Include="Content\img\icons\apple-touch-icon-precomposed.png" />
     <Content Include="Content\img\icons\apple-touch-icon.png" />
     <Content Include="Content\img\icons\favicon.ico" />
+    <Content Include="Content\img\pc-logo%402x.png" />
+    <Content Include="Content\img\pc-logo.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
