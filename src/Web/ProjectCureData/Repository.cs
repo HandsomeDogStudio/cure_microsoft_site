@@ -163,7 +163,8 @@ namespace ProjectCureData
 	    {
 	        using (var ctx = new ProjectCureContext())
 	        {
-	            ctx.Events.Remove(GetEventById(eventId));
+	            ctx.Events.Remove(ctx.Events.First(e => e.EventId == eventId));
+	            ctx.SaveChanges();
 	        }
 	    }
 
