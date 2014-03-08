@@ -47,6 +47,6 @@ namespace ProjectCure.Web.Models
 
     public enum EventEditAction
     {
-        Unknown, Assign, Unassign, Edit
+        Unknown, Assign, Unassign, Edit, Delete
     }
 }
