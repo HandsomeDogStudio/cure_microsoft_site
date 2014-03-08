@@ -17,6 +17,7 @@ namespace ProjectCureData
 		void SaveUser(User user);
 		IEnumerable<User> GetUserList();
 		IEnumerable<Role> GetRoleList();
+		IEnumerable<User> GetAdminList();
 			
 		// Event Methods
 		IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate);

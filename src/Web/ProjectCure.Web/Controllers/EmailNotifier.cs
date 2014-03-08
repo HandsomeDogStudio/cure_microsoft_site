@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
+using ProjectCureData;
+using ProjectCureData.Models;
 
 namespace ProjectCure.Web.Controllers
 {
@@ -37,12 +39,7 @@ namespace ProjectCure.Web.Controllers
         /// <summary>
         /// This version is used when you want to define the SMTP info from another source outside of gmail
         /// </summary>
-        /// <param name="host"></param>
-        /// <param name="port"></param>
-        /// <param name="enableSSL"></param>
-        /// <param name="useDefaultCredentials"></param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name="smtpClient"></param>
         public EmailNotifier(SmtpClient smtpClient)
         {
             //Create the smtp client with info given above
@@ -61,26 +58,53 @@ namespace ProjectCure.Web.Controllers
             };
         }
 
-        public string GetTemplateSubject(string templateName)
+        private void GetTemplateByTemplateName(IRepository repository, string templateName, out string templateBody, out string templateSubject)
         {
-            //modify this to fill in the subject from the given template
-            return "something";
+            Template template = repository.GetTemplateByName(templateName);
+            //modify this to fill in the subject from the given template+
+            templateBody = template.TemplateText;
+            templateSubject = template.TemplateSubject;
         }
 
-        public string FillInTemplate(string templateName)
+        public string FillInTemplate(string templatebody)
         {
             //modify this to fill in the template with the correct name and such
             return "something";
         }
 
-        public void SendNotification(string recipientAddress, string templateName)
-        {
-            var email = new MailMessage("donotreply@projectcure.org", recipientAddress);
 
-            //Get template subject and body message
-            
-            email.Subject = "sub";
-            email.Body = "Test";
+
+        public void GiveTemporaryPassword(IRepository repository, string recipientAddress, string tempPassword,string templateName = "Password Reset Email")
+        {
+            string templateBody;
+            string templateSubject;
+
+            GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
+
+
+
+
+        }
+
+
+        private void SendNotification(List<string> recipientAddresses, string body, string subject)
+        {
+
+            var email = new MailMessage("donotreply@projectcure.org", recipientAddresses.First());
+
+            //Remove the already used email address from the array
+            recipientAddresses.Remove(recipientAddresses.First());
+            //cycle through any other addresses to put them in the to field.
+            if (recipientAddresses.Any())
+            {
+                foreach (var address in recipientAddresses)
+                {
+                    email.To.Add(address);
+                }
+            }
+
+            email.Subject = subject;
+            email.Body = body;
                 
             smtpClient.Send(email);
         }

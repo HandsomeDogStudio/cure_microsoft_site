@@ -108,6 +108,19 @@ namespace ProjectCureData
 			}
 		}
 
+		public IEnumerable<User> GetAdminList()
+		{
+			using (var ctx = new ProjectCureContext())
+			{
+				var users = ctx.Users
+					.Include("Role")
+					.Where(u => u.Role.RoleName.ToUpper().StartsWith("ADMIN"))
+					.ToList();
+
+				return users;
+			}
+		}
+
 		public IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate)
         {
             endDate = endDate.AddDays(1);
