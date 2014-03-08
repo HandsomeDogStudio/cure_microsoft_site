@@ -56,6 +56,7 @@ namespace ProjectCure.Web
 
             //jquery custom plugins
             bundles.Add(new ScriptBundle(ScriptBundles.JqueryPlugins).Include(
+                "~/Scripts/jquery/plugins/jquery.form.js",
                 "~/Scripts/jquery/plugins/jquery.validate.js",
                 "~/Scripts/jquery/plugins/jquery.unobtrusive-ajax.js",
                 "~/Scripts/jquery/plugins/jquery.validate.unobtrusive.js",
