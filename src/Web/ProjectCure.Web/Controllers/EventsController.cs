@@ -54,16 +54,19 @@ namespace ProjectCure.Web.Controllers
         [HttpPost]
         public void List(EditEventModel input)
         {
-            var manager = Repository.GetUserById(input.ManagerId);
-            var e = new Event
+            if (HttpContext.User.IsInRole("Admin"))
             {
-                EventDescription = input.Description,
-                EventStartDateTime = DateTime.Parse(input.StartDateTime),
-                EventEndDateTime = DateTime.Parse(input.EndDateTime),
-                EventTitle = input.Title,
-                User = manager
-            };
-            Repository.SaveEvent(e);
+                var manager = Repository.GetUserById(input.ManagerId);
+                var e = new Event
+                {
+                    EventDescription = input.Description,
+                    EventStartDateTime = DateTime.Parse(input.StartDateTime),
+                    EventEndDateTime = DateTime.Parse(input.EndDateTime),
+                    EventTitle = input.Title,
+                    User = manager
+                };
+                Repository.SaveEvent(e);
+            }
         }
 
         [HttpPut]
