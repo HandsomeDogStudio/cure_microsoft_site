@@ -3,7 +3,7 @@ $(function () {
         $("#logoutForm").submit();
     });
 
-    $("form").on("submit", "#editUserForm", function (e) {
+    $("#editUserModal").on("submit", "#editUserForm", function (e) {
         e.preventDefault();
 
         var $this = $(this);
@@ -14,8 +14,40 @@ $(function () {
             type: "POST",
             url: $this.attr("action")
         }).then(function (response, textStatus, jqXHR) {
-            $("#myModal").empty().html(response);
+            //update modal contents with response, hide modal
+            $("#editUserModal").empty().html(response).modal("hide");
 
+        }, function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        });
+    });
+
+    $("#editUserModal").on("show.bs.modal", function (e) {
+        var $modal = $(this);
+        var $a = $(e.relatedTarget);
+
+        //before showing, initiate a fetch of the user edit partial
+        $.ajax({
+            dataType: "text",
+            type: "GET",
+            url: $a.attr("href")
+        }).then(function (response, textStatus, jqXHR) {
+            $modal.empty().html(response);
+        }, function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        });
+    });
+
+    $("#editUserModal").on("hidden.bs.modal", function (e) {
+        //update the user list when the modal is hidden to 'refresh' the list with any changes made
+        $.ajax({
+            dataType: "text",
+            type: "GET",
+            url: "/User/ListPartial"
+        }).then(function (response, textStatus, jqXHR) {
+            $("#editUserModal").empty();
+            $("#userList").find("tbody").empty().html(response);
+            
         }, function (jqXHR, textStatus, errorThrown) {
             alert(errorThrown);
         });

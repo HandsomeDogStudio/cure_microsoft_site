@@ -85,6 +85,9 @@ namespace ProjectCureData
 			{
 				var users = ctx.Users
 					.Include("Role")
+                    .OrderBy(u => u.UserActiveIn ? 0 : 1)
+                    .ThenBy(u => u.UserLastName)
+                    .ThenBy(u => u.UserFirstName)
 					.ToList();
 
 				foreach (var user in users.Where(u => u.UserActiveIn))

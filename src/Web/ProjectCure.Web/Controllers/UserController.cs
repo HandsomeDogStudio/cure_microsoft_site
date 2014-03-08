@@ -23,7 +23,15 @@ namespace ProjectCure.Web.Controllers
 
         public ActionResult List()
         {
-            return View(
+            return View(new UserListModel
+                {
+                    Users = Repository.GetUserList()
+                });
+        }
+
+        public ActionResult ListPartial()
+        {
+            return PartialView(
                 new UserListModel
                 {
                     Users = Repository.GetUserList()
