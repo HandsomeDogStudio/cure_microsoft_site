@@ -18,7 +18,7 @@ namespace ProjectCure.Web.Controllers
         //
         // GET: /Calendar/
 
-        public JsonResult Index(DateTime startDate, DateTime endDate)
+        public JsonResult List(DateTime startDate, DateTime endDate)
         {
             var results = new List<object>();
             foreach (var e in Repository.GetEventsBetweenDates(startDate, endDate))
@@ -37,10 +37,10 @@ namespace ProjectCure.Web.Controllers
             return Json(results, JsonRequestBehavior.AllowGet);
         }
 
-//        public PartialViewResult Index(int id)
-//        {
-//            return PartialView("", Repository.GetEventById(id));
-//        }
+        public PartialViewResult Get(int id)
+        {
+            return PartialView("", Repository.GetEventById(id));
+        }
 
 //        [HttpPost]
 //        public JsonResult Index(EventDTO input)
