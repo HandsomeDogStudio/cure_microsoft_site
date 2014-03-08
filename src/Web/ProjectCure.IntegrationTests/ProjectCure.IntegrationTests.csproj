@@ -67,6 +67,10 @@
     <Compile Include="UserTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ProjectCure.Web\ProjectCure.Web.csproj">
+      <Project>{73f69f0b-4df5-482d-8cdf-5fad16dac197}</Project>
+      <Name>ProjectCure.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProjectCureData\ProjectCureData.csproj">
       <Project>{e009b670-78e2-418b-909f-53838de344fc}</Project>
       <Name>ProjectCureData</Name>
