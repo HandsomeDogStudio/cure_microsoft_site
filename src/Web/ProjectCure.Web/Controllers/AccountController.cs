@@ -90,15 +90,14 @@ namespace ProjectCure.Web.Controllers
                     UserPassword = model.NewPassword
                 });
 
-                var notifier = new EmailNotifier();
-                //notify user that their password has been reset
+                model.PasswordChanged = true;
 
+                var notifier = new EmailNotifier();
+                notifier.PasswordChangeConfirmationNotification(Repository, model.UserName);
             }
 
             return View(model);
         }
-
-        #region Helpers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -111,7 +110,5 @@ namespace ProjectCure.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        
-        #endregion
     }
 }
