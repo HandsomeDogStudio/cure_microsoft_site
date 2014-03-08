@@ -71,19 +71,12 @@ namespace ProjectCure.Web.Controllers
         {
             if (HttpContext.User.IsInRole("Admin"))
             {
-                User manager = null;
-                if (input.ManagerId != null)
-                {
-                    manager = Repository.GetUserById(input.ManagerId.Value);
-                }
-
                 var e = new Event
                 {
                     EventDescription = input.Description,
                     EventStartDateTime = DateTime.ParseExact(input.Date + " " + input.StartTime, "M/d/yyyy HH:mm", CultureInfo.InvariantCulture),
                     EventEndDateTime = DateTime.ParseExact(input.Date + " " + input.EndTime, "M/d/yyyy HH:mm", CultureInfo.InvariantCulture),
                     EventTitle = input.Title,
-                    User = manager,
                     EventManagerId = input.ManagerId
                 };
                 Repository.SaveEvent(e);
