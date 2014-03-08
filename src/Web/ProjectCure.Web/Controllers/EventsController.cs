@@ -1,4 +1,5 @@
-﻿using ProjectCure.Web.Code;
+﻿using System.Web.Routing;
+using ProjectCure.Web.Code;
 using ProjectCure.Web.Models;
 using ProjectCureData;
 using ProjectCureData.Models;
@@ -95,13 +96,13 @@ namespace ProjectCure.Web.Controllers
                         Repository.SaveEvent(e);
                     }
                     break;
+                case EventEditAction.Delete:
+                    if (HttpContext.User.IsInRole("Admin"))
+                    {
+                        Repository.DeleteEventById(id);
+                    }
+                    break;
             }
-        }
-
-        [HttpDelete]
-        public void Delete(int id)
-        {
-            Repository.DeleteEventById(id);
         }
     }
 }
