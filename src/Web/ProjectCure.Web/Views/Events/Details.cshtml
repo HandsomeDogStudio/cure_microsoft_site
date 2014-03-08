@@ -1,28 +1,21 @@
 ﻿@model ProjectCure.Web.Models.EventDetailsModel
 
-<table>
-    <tr>
-        <th>Id</th>
-        <td>@Model.Id</td>
-    </tr>
-    <tr>
-        <th>Title</th>
-        <td>@Model.Title</td>
-    </tr>
-    <tr>
-        <th>Begin Date/Time</th>
-        <td>@Model.StartDateTime</td>
-    </tr>
-    <tr>
-        <th>End Date/Time</th>
-        <td>@Model.EndDateTime</td>
-    </tr>
-    <tr>
-        <th>Manager</th>
-        <td>@Model.Manager</td>
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td>@Model.Description</td>
-    </tr>
-</table>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title" id="myModalLabel">@Model.Title</h4>
+    </div>
+    <form action="http://www.apple.com" id="eventForm">
+      <div class="modal-body">
+        <h4>@Model.StartDateTime</h4>
+        <h4>@Model.Description</h4>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary claim" data-confirm="Are you sure?">I Will Lead</button>
+      </div>
+    </form>
+  </div>
+</div>

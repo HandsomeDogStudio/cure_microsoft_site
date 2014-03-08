@@ -20,11 +20,16 @@ namespace ProjectCure.Web.Controllers
         //
         // GET: /Calendar/
 
-        public JsonResult List(DateTime startDate, DateTime endDate)
+        public JsonResult List(long start, long end)
         {
             User currentUser = Repository.GetUserByUserName(HttpContext.User.Identity.Name);
 
             var results = new List<object>();
+
+            var dt1970 = new DateTime(1970, 1, 1);
+            DateTime startDate = dt1970.AddMilliseconds(start * 1000).Date;
+            DateTime endDate = dt1970.AddMilliseconds(end * 1000).Date;
+
             foreach (var e in Repository.GetEventsBetweenDates(startDate, endDate))
             {
                 results.Add(new
@@ -49,7 +54,7 @@ namespace ProjectCure.Web.Controllers
             {
                 managerName = @event.User.UserFirstName + " " + @event.User.UserLastName;
             }
-            return PartialView("Details", new EventDetailsModel(@event.EventId, @event.EventTitle, @event.EventDescription, @event.EventStartDateTime.ToString("g"), @event.EventEndDateTime.ToString("g"), managerName));
+            return PartialView("Details", new EventDetailsModel(@event.EventId, @event.EventTitle, @event.EventDescription, @event.EventStartDateTime.ToString("h:mm tt"), @event.EventEndDateTime.ToString("h:mm tt"), managerName));
         }
 
         [HttpPost]
