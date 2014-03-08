@@ -28,12 +28,7 @@
             <td>@u.UserEmail</td>
             <td>@u.Role.RoleName</td>
             <td>@u.FirstEventText()</td>
-            <td>
-                @using (Html.BeginForm("ResetPassword", "User", new { id = u.UserId }))
-                {
-                    <button type="submit" class="btn btn-link">Reset password</button>
-                }
-            </td>
+            <td><a class="reset-password" data-user-id="@u.UserId" href="#">Reset password</a></td>
             <td class="align-right">
                 @Html.ActionLink("Edit", "Edit", new { id = u.UserId }, new { data_toggle = "modal", data_target = ".bs-example-modal-lg" })
             </td>
