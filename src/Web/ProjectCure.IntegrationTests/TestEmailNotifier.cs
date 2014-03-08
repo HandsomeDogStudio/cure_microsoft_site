@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectCure.Web.Controllers;
 
@@ -11,7 +12,7 @@ namespace ProjectCure.IntegrationTests
         public void TestHappyPathEmailNotifier()
         {
             var testEmailer = new EmailNotifier();
-            testEmailer.SendNotification("nickolas.wood@hotmail.com", "Sign Up Template");
+            //testEmailer.SendNotification(new List<string>() {"nickolas.wood@hotmail.com"}, "Stuff here", "Sign Up Template");
         }
     }
 }

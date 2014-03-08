@@ -66,22 +66,14 @@ namespace ProjectCure.Web.Controllers
             templateSubject = template.TemplateSubject;
         }
 
-        public string FillInTemplate(string templatebody)
-        {
-            //modify this to fill in the template with the correct name and such
-            return "something";
-        }
-
-
-
-        public void GiveTemporaryPassword(IRepository repository, string recipientAddress, string tempPassword,string templateName = "Password Reset Email")
+        public void GiveTemporaryPassword(IRepository repository, string recipientAddress, string tempPassword, string templateName = "Password Reset Email")
         {
             string templateBody;
             string templateSubject;
 
             GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
 
-
+            //Fill in the dynamic variables from template
 
 
         }
