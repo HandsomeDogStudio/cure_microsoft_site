@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ProjectCure.Web.Code;
 using ProjectCureData;
 
 namespace ProjectCure.Web.Controllers
 {
-    public class EventsController : Controller
+    public class EventsController : ProjectCureControllerBase
     {
+        public EventsController(IRepository repository)
+            : base(repository)
+        {
+        }
+
         //
         // GET: /Calendar/
 
         public JsonResult Index(DateTime startDate, DateTime endDate)
         {
             var results = new List<object>();
-            var repository = new Repository();
-            foreach (var e in repository.GetEventsBetweenDates(startDate, endDate))
+            foreach (var e in Repository.GetEventsBetweenDates(startDate, endDate))
             {
                 results.Add(new
                 {
@@ -32,13 +37,10 @@ namespace ProjectCure.Web.Controllers
             return Json(results, JsonRequestBehavior.AllowGet);
         }
 
-        public PartialViewResult Index(int id)
-        {
-            return View("", new
-            {
-                
-            });
-        }
+//        public PartialViewResult Index(int id)
+//        {
+//            return PartialView("", Repository.GetEventById(id));
+//        }
 
 //        [HttpPost]
 //        public JsonResult Index(EventDTO input)
