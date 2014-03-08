@@ -8,7 +8,7 @@
 
 <button id="unfilledEventsNotification" type="button" class="btn btn-default pull-left">Notification of unfilled events</button>
 
-<button id="addUser" type="button" class="btn btn-primary new-user pull-right" data-toggle="modal" data-target=".new-user-modal-lg">Add a new user</button>
+<a href="/User/Add" class="btn btn-primary pull-right" data-toggle="modal" data-target=".bs-edit-user-modal-lg">Add a new user</a>
 
 <table id="userList" class="table table-striped table-hover">
     <thead>
@@ -21,22 +21,10 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var u in Model.Users)
-        {
-        <tr class="@(u.UserActiveIn ? "" : "user-inactive")">
-            <td>@u.UserFirstName @u.UserLastName</td>
-            <td>@u.UserEmail</td>
-            <td>@u.Role.RoleName</td>
-            <td>@u.FirstEventText()</td>
-            <td><a class="reset-password" data-user-id="@u.UserId" href="#">Reset password</a></td>
-            <td class="align-right">
-                @Html.ActionLink("Edit", "Edit", new { id = u.UserId }, new { data_toggle = "modal", data_target = ".bs-example-modal-lg" })
-            </td>
-        </tr>
-        }
+        @Html.Partial("ListPartial", Model)
     </tbody>
 </table>
 
 <!-- User edit modal -->
-<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bs-edit-user-modal-lg" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 </div>

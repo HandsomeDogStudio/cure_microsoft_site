@@ -241,3 +241,13 @@ footer {
     display: block;
     margin-top: 10px;
 }
+
+.user-inactive td
+{
+    color: #999;
+    text-decoration: line-through;
+}
+.user-inactive td.action
+{
+    text-decoration: none;
+}

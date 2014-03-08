@@ -1,0 +1,15 @@
+﻿@using ProjectCure.Web.Models;
+@model UserListModel
+@foreach (var u in Model.Users)
+{
+<tr class="@(u.UserActiveIn ? "" : "user-inactive")">
+    <td>@u.UserFirstName @u.UserLastName</td>
+    <td>@u.UserEmail</td>
+    <td>@u.Role.RoleName</td>
+    <td>@u.FirstEventText()</td>
+    <td class="action"><a class="reset-password" data-user-id="@u.UserId" href="#">Reset password</a></td>
+    <td class="action">
+        @Html.ActionLink("Edit", "Edit", new { id = u.UserId }, new { data_toggle = "modal", data_target = ".bs-edit-user-modal-lg" })
+    </td>
+</tr>
+}
