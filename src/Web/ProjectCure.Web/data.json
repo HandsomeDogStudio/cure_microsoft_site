@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "title": "Vanderbilt",
+    "start": "2014-03-01",
+    "className": "available"
+  },
+  {
+    "id": "2",
+    "title": "HCA",
+    "start": "2014-03-02",
+    "className": "assigned"
+  },
+  {
+    "id": "3",
+    "title": "Emma",
+    "start": "2014-03-03",
+    "className": "owner"
+  }
+]
