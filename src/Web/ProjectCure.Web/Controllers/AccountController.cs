@@ -55,7 +55,7 @@ namespace ProjectCure.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "The email or password provided is incorrect.");
             ViewBag.HideLogin = true;
 
             return View(model);
