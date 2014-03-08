@@ -157,17 +157,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Common\ScriptBundles.cs" />
-    <Compile Include="App_Common\StyleBundles.cs" />
+    <Compile Include="Code\ScriptBundles.cs" />
+    <Compile Include="Code\StyleBundles.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\Bootstrapper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Code\BaseWebViewPage.cs" />
     <Compile Include="Code\CustomAuthorizeAttribute.cs" />
     <Compile Include="Code\CustomPrincipal.cs" />
     <Compile Include="Code\ProjectCureControllerBase.cs" />
+    <Compile Include="Code\WebRoles.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EmailNotifier.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -190,6 +192,13 @@
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\css\fullcalendar.print.css" />
     <Content Include="Content\css\bootstrap-custom.css" />
+    <Content Include="Content\img\icons\apple-touch-icon-114x114-precomposed.png" />
+    <Content Include="Content\img\icons\apple-touch-icon-144x144-precomposed.png" />
+    <Content Include="Content\img\icons\apple-touch-icon-57x57-precomposed.png" />
+    <Content Include="Content\img\icons\apple-touch-icon-72x72-precomposed.png" />
+    <Content Include="Content\img\icons\apple-touch-icon-precomposed.png" />
+    <Content Include="Content\img\icons\apple-touch-icon.png" />
+    <Content Include="Content\img\icons\favicon.ico" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -220,18 +229,6 @@
     </Content>
     <Content Include="Content\css\site.css" />
     <Content Include="Content\img\accent.png" />
-    <Content Include="Content\img\bullet.png" />
-    <Content Include="Content\img\heroAccent.png" />
-    <Content Include="Content\img\orderedList0.png" />
-    <Content Include="Content\img\orderedList1.png" />
-    <Content Include="Content\img\orderedList2.png" />
-    <Content Include="Content\img\orderedList3.png" />
-    <Content Include="Content\img\orderedList4.png" />
-    <Content Include="Content\img\orderedList5.png" />
-    <Content Include="Content\img\orderedList6.png" />
-    <Content Include="Content\img\orderedList7.png" />
-    <Content Include="Content\img\orderedList8.png" />
-    <Content Include="Content\img\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
