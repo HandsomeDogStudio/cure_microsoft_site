@@ -97,10 +97,8 @@ $(function () {
             dataType: "json",
             type: "POST",
             url: "/User/UnfilledEventsNotification/"
-        }).then(function (response, textStatus, jqXHR) {
-            if (response.success) {
-                alert(response.message);
-            }
+        }).then(function (response, textStatus, jqXHR) {            
+            alert(response.message);
         }, function (jqXHR, textStatus, errorThrown) {
             alert(errorThrown);
         }).always(function () {

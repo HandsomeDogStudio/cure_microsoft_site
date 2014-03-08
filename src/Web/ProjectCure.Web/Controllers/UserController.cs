@@ -130,27 +130,34 @@ namespace ProjectCure.Web.Controllers
         public ActionResult ResetPassword(int id)
         {
             var success = false;
-
-            var user = Repository.GetUserById(id);
-            if (user != null)
+            try
             {
-                var newPassword = GetNewPassword();
-                user.UserPassword = newPassword;
-                Repository.UpdatePassword(user);
-
-                success = true;
-
-                var notifier = new EmailNotifier();
-                notifier.GiveTemporaryPasswordNotification(Repository, user.UserEmail, newPassword);
-
-                return Json(new
+                var user = Repository.GetUserById(id);
+                if (user != null)
                 {
-                    UserId = user.UserId,
-                    UserName = user.UserFirstName + " " + user.UserLastName,
-                    UserEmail = user.UserEmail,
-                    success,
-                });
+                    var newPassword = GetNewPassword();
+                    user.UserPassword = newPassword;
+                    Repository.UpdatePassword(user);
+
+                    success = true;
+
+                    var notifier = new EmailNotifier();
+                    notifier.GiveTemporaryPasswordNotification(Repository, user.UserEmail, newPassword);
+
+                    return Json(new
+                    {
+                        UserId = user.UserId,
+                        UserName = user.UserFirstName + " " + user.UserLastName,
+                        UserEmail = user.UserEmail,
+                        success,
+                    });
+                }
             }
+            catch (Exception ex)
+            {
+                var log = ex.GetBaseException().Message;
+            }
+
 
             return Json(new { success });
         }
