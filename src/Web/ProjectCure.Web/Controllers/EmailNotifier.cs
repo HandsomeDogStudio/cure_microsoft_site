@@ -15,25 +15,42 @@ namespace ProjectCure.Web.Controllers
         private bool useDefaultCredentials;
         private string username;
         private string password;
+
+        /// <summary>
+        /// The default constructor is using gmail, donotreply.projectcure@gmail.com (password: AnnieEllement)
+        /// </summary>
         public EmailNotifier()
         {
-            Console.WriteLine(Environment.CurrentDirectory);
-            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
-            host = System.Configuration.ConfigurationManager.AppSettings["Host"];
-            host = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(Environment.CurrentDirectory).AppSettings.Settings["Host"].Value;
-            Console.WriteLine();
-            //Get the values for SMTP from the Web Config
-            //var webConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(null).AppSettings;
-            //var host = webConfig.Settings["Host"].Value;
-            //Console.WriteLine(webConfig.Settings["Host"].Value);
-            //var port = int.Parse(webConfig.Settings["Port"].Value);
-            //var enableSSL = bool.Parse(webConfig.Settings["EnableSSL"].Value);
-            //var useDefaultCredentials = bool.Parse(webConfig.Settings["UseDefaultCredentials"].Value);
-            //var username = webConfig.Settings["Username"].Value;
-            //var password = webConfig.Settings["Password"].Value;
+            //These are the default values being used (also for testing purposes)
+            host = "smtp.gmail.com";
+            port = 587;
+            enableSSL = true;
+            useDefaultCredentials = false;
+            username = "donotreply.projectcure@gmail.com";
+            password = "AnnieEllement";
 
 
             //Create the smtp client with info given above
+            CreateSmtpClient();
+        }
+
+        /// <summary>
+        /// This version is used when you want to define the SMTP info from another source outside of gmail
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        /// <param name="enableSSL"></param>
+        /// <param name="useDefaultCredentials"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        public EmailNotifier(SmtpClient smtpClient)
+        {
+            //Create the smtp client with info given above
+            this.smtpClient = smtpClient;
+        }
+
+        private void CreateSmtpClient()
+        {
             smtpClient = new SmtpClient
             {
                 Host = host,
@@ -44,8 +61,15 @@ namespace ProjectCure.Web.Controllers
             };
         }
 
-        public string FillInTemplate(string template)
+        public string GetTemplateSubject(string templateName)
         {
+            //modify this to fill in the subject from the given template
+            return "something";
+        }
+
+        public string FillInTemplate(string templateName)
+        {
+            //modify this to fill in the template with the correct name and such
             return "something";
         }
 
@@ -54,6 +78,7 @@ namespace ProjectCure.Web.Controllers
             var email = new MailMessage("donotreply@projectcure.org", recipientAddress);
 
             //Get template subject and body message
+            
             email.Subject = "sub";
             email.Body = "Test";
                 

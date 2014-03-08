@@ -1,0 +1,37 @@
+﻿@using ProjectCure.Web.Models;
+@using ProjectCureData.Models;
+@model UserListModel
+@{ ViewBag.Title = "User List"; }
+<section>
+    <h2>User List</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th colspan="6">
+                    @Html.ActionLink("Add", "Add")
+                </th>
+            </tr>
+            <tr>
+                <th></th>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Role</th>
+                <th>Is Active?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var u in Model.Users)
+            {
+            <tr>
+                <td>@Html.ActionLink("Edit", "Edit", new { id = u.UserId })</td>
+                <td>@u.UserEmail</td>
+                <td>@u.UserFirstName</td>
+                <td>@u.UserLastName</td>
+                <td>@u.Role.RoleName</td>
+                <td>@(u.UserActiveIn ? "yes" : "no")</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</section>
