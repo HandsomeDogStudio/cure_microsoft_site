@@ -12,7 +12,6 @@ using ProjectCureData;
 
 namespace ProjectCure.Web.Controllers
 {
-    [CustomAuthorize]
     public class AccountController : ProjectCureControllerBase
     {
         public AccountController(IRepository repository) : base(repository)
@@ -91,6 +90,8 @@ namespace ProjectCure.Web.Controllers
                     UserPassword = model.NewPassword
                 });
 
+                var notifier = new EmailNotifier();
+                //notify user that their password has been reset
 
             }
 

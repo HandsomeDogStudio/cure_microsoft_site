@@ -7,6 +7,7 @@ using ProjectCureData;
 
 namespace ProjectCure.Web.Code
 {
+    [CustomAuthorize]
     public class ProjectCureControllerBase : Controller
     {
         private readonly IRepository _repository;

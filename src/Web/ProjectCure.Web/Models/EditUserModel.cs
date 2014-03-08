@@ -10,6 +10,8 @@ namespace ProjectCure.Web.Models
 {
     public class EditUserModel
     {
+        public bool IsNew { get; set; }
+
         public int UserId { get; set; }
 
         [Required]
