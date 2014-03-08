@@ -1,6 +1,11 @@
 ﻿html, body {
   height: 100%;
 }
+
+a, .pc-red, .delete { color:#d3113a; }
+a:hover { color:#a40a2b; }
+.btn-danger { background-color:#d3113a; text-decoration:none; }
+
 #wrap {
   min-height: 100%;
 }
@@ -10,8 +15,17 @@
   padding-bottom:150px; /* this needs to be bigger than footer height*/
 }
 
+.container.footer {
+  background:#000;
+  color:#aaa;
+  margin-right:0;
+  margin-left:0;
+  text-align:center;
+  max-width:100%;
+}
+
 footer {
-  padding-top:20px;
+  padding:25px 0;
 }
 
 /* Classes for Event Types */
@@ -40,6 +54,43 @@ footer {
   background:url('/Content/img/wood-slates.jpg');
   color:#fff;
 }
+
+.jumbotron.sign-in h1 {
+  font-family:Georgia;
+  text-shadow:1px 1px 5px #231f20;
+
+}
+
+.about {
+  font-size:18px;
+  line-height:35px;
+  padding:30px 20px 60px 20px;
+}
+
+.jumbotron.map {
+  background:#ccc;
+  font-size:18px;
+  margin-bottom:0;
+}
+
+.jumbotron.map svg {
+  margin:0 auto;
+  width:300px;
+}
+
+.location-info {
+  padding-left:60px;
+}
+
+@media screen and (min-width: 768px) {
+  .jumbotron.map svg {
+    width:504px;
+    height:313px;
+  }
+}
+
+.about a, .map a { text-decoration:underline; }
+.map a.btn { text-decoration:none; }
 
 #footer {
     position: absolute;
