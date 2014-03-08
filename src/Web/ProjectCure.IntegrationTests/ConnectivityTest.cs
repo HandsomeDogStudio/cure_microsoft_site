@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ProjectCureData;
 using ProjectCureData.Models;
 
 namespace ProjectCure.IntegrationTests
@@ -15,6 +16,15 @@ namespace ProjectCure.IntegrationTests
 			{
 				Assert.AreNotEqual(0, context.Roles.Count());
 			}
+		}
+
+		[TestMethod]
+		public void CanRetrieveUser()
+		{
+			var repo = new Repository();
+			Assert.IsTrue(repo.IsValidUser("jpresa@gmail.com", "test"));
+
+
 		}
 	}
 }
