@@ -73,4 +73,26 @@ $(function () {
             });
         }
     });
+
+    //Unfilled Event Notifications
+    $("#unfilledEventsNotification").click(function (e) {
+
+        var btn = $(this);
+        btn.button('loading');
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: "/User/UnfilledEventsNotification/"
+        }).then(function (response, textStatus, jqXHR) {
+            if (response.success) {
+                alert(response.message);
+            }
+        }, function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        }).always(function () {
+            btn.button('reset');
+        });
+
+        return false;
+    });
 })

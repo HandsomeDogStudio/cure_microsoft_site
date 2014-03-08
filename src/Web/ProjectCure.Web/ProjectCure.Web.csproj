@@ -286,9 +286,6 @@
     <Content Include="Views\Events\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\User\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
