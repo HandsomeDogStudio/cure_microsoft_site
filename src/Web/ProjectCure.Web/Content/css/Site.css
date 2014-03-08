@@ -46,7 +46,7 @@ a:hover { color:#a40a2b; }
 }
 
 footer {
-  background:url('/images/pc-logo-footer.png') no-repeat center 50px;
+  background:url('/Content/img/pc-logo-footer.png') no-repeat center 50px;
   padding:200px 0 25px 0;
 }
 
@@ -54,7 +54,7 @@ footer {
 (-webkit-min-device-pixel-ratio: 2),
 (min-resolution: 192dpi) {
   footer {
-    background:url('/images/pc-logo-footer@2x.png') no-repeat center 50px;
+    background:url('/Content/img/pc-logo-footer@2x.png') no-repeat center 50px;
     background-size:400px 106px;
   }
 }
