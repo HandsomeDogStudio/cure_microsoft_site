@@ -180,7 +180,14 @@ namespace ProjectCure.Web.Controllers
 				email.To.Add(recipientAddress);
 			}
 
-			smtpClient.Send(email);
+		    try
+		    {
+		        smtpClient.Send(email);
+		    }
+		    catch (Exception e)
+		    {
+                //TODO
+		    }
 		}
 	}
 }
