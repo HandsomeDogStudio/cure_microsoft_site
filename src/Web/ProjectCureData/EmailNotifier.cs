@@ -5,6 +5,8 @@ using System.Net.Mail;
 using System.Web;
 using ProjectCureData;
 using ProjectCureData.Models;
+using System.Configuration;
+using System.Net.Configuration;
 
 namespace ProjectCure.Web.Controllers
 {
@@ -17,6 +19,7 @@ namespace ProjectCure.Web.Controllers
         private bool useDefaultCredentials;
         private string username;
         private string password;
+        private SmtpSection section;
 
         /// <summary>
         /// The default constructor is using gmail, donotreply.projectcure@gmail.com (password: AnnieEllement)
@@ -24,16 +27,17 @@ namespace ProjectCure.Web.Controllers
         public EmailNotifier()
         {
             //These are the default values being used (also for testing purposes)
-            host = "smtp.gmail.com";
-            port = 587;
-            enableSSL = true;
-            useDefaultCredentials = false;
-            username = "donotreply.projectcure@gmail.com";
-            password = "AnnieEllement";
+            //host = "smtp.gmail.com";
+            //port = 587;
+            //enableSSL = true;
+            //useDefaultCredentials = false;
+            //username = "donotreply.projectcure@gmail.com";
+            //password = "AnnieEllement";
 
 
             //Create the smtp client with info given above
             CreateSmtpClient();
+            SetSection();
         }
 
         /// <summary>
@@ -44,6 +48,7 @@ namespace ProjectCure.Web.Controllers
         {
             //Create the smtp client with info given above
             this.smtpClient = smtpClient;
+            SetSection();
         }
 
         public void GiveTemporaryPasswordNotification(IRepository repository, string recipientAddress, string tempPassword)
@@ -59,8 +64,11 @@ namespace ProjectCure.Web.Controllers
             templateBody = templateBody.Replace("{temp password}", tempPassword);
 
             //Send the email
-            SendNotification(repository, new List<string> { recipientAddress }, templateBody, templateSubject);
+            SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
 
+        private void SetSection()
+        {
+            section = ConfigurationManager.GetSection("system.net/mailSettings/smtp") as SmtpSection;
         }
 
         public void PasswordChangeConfirmationNotification(IRepository repository, string recipientAddress)
@@ -146,11 +154,11 @@ namespace ProjectCure.Web.Controllers
         {
             smtpClient = new SmtpClient
             {
-                Host = host,
-                Port = port,
-                EnableSsl = enableSSL,
-                UseDefaultCredentials = useDefaultCredentials,
-                Credentials = new System.Net.NetworkCredential(username, password)
+                //Host = host,
+                //Port = port,
+                //EnableSsl = enableSSL,
+                //UseDefaultCredentials = useDefaultCredentials,
+                //Credentials = new System.Net.NetworkCredential(username, password)
             };
         }
 
@@ -165,31 +173,26 @@ namespace ProjectCure.Web.Controllers
         {
             //Check to make sure any of potential recipients are inactive that they are not sent an email.
             foreach (var recipientAddress in recipientAddresses.Where(recipientAddress => !repository.GetUserByUserName(recipientAddress).UserActiveIn))
-            {
-                recipientAddresses.Remove(recipientAddress);
-            }
+        {
 
-            //send the email if there is still anyone to recieve it
+            var email = new MailMessage("donotreply@projectcure.org", recipientAddresses.First());
+
+            //Remove the already used email address from the array
+            recipientAddresses.Remove(recipientAddresses.First());
+            //cycle through any other addresses to put them in the to field.
             if (recipientAddresses.Any())
             {
-                var email = new MailMessage("donotreply@projectcure.org", recipientAddresses.First());
-
-                //Remove the already used email address from the array
-                recipientAddresses.Remove(recipientAddresses.First());
-                //cycle through any other addresses to put them in the to field.
-                if (recipientAddresses.Any())
+                foreach (var address in recipientAddresses)
                 {
-                    foreach (var address in recipientAddresses)
-                    {
-                        email.To.Add(address);
-                    }
+                    email.To.Add(address);
                 }
-
-                email.Subject = subject;
-                email.Body = body;
-
-                smtpClient.Send(email);
             }
+
+            email.Subject = subject;
+            email.Body = body;
+                
+            smtpClient.Send(email);
         }
     }
+}
 }
