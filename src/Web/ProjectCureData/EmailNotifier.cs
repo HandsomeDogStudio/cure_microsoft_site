@@ -64,7 +64,8 @@ namespace ProjectCure.Web.Controllers
             templateBody = templateBody.Replace("{temp password}", tempPassword);
 
             //Send the email
-            SendNotification(new List<string> { recipientAddress }, templateBody, templateSubject);
+            SendNotification(repository, new List<string>(){recipientAddress}, templateBody, templateSubject);
+        }
 
         private void SetSection()
         {
@@ -125,7 +126,7 @@ namespace ProjectCure.Web.Controllers
             GetTemplateByTemplateName(repository, templateName, out templateBody, out templateSubject);
 
             //Create list of unfilled events
-            string eventsText;
+            string eventsText = "";
             foreach (var unfilledEvent in eventsToBeListed)
             {
                 eventsText += unfilledEvent.EventTitle;
@@ -147,8 +148,6 @@ namespace ProjectCure.Web.Controllers
             var userFullName = user.UserFirstName + " " + user.UserLastName;
             return userFullName;
         }
-
-        private List<string> 
 
         private void CreateSmtpClient()
         {
