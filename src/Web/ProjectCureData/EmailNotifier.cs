@@ -129,14 +129,13 @@ namespace ProjectCure.Web.Controllers
             string eventsText = "";
             foreach (var unfilledEvent in eventsToBeListed)
             {
-                eventsText += unfilledEvent.EventTitle;
+                eventsText += unfilledEvent.EventTitle + " on " + unfilledEvent.EventStartDateTime.Date.ToShortDateString()
+                            + " from " + unfilledEvent.EventStartDateTime.ToShortTimeString() + " to " 
+                            + unfilledEvent.EventEndDateTime.ToShortTimeString() + "\n\n";
             }
 
             //Fill in the dynamic variables from template
             templateBody = templateBody.Replace("{events}", eventsText);
-            //templateBody = templateBody.Replace("{date}", cancelledEvent.EventStartDateTime.Date.ToShortDateString());
-            //templateBody = templateBody.Replace("{start time}", cancelledEvent.EventStartDateTime.ToShortTimeString());
-            //templateBody = templateBody.Replace("{end time}", cancelledEvent.EventEndDateTime.ToShortTimeString());
 
             //Send the email
             SendNotification(repository, listOfUserEmails, templateBody, templateSubject);
