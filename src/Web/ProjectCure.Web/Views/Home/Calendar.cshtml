@@ -96,10 +96,10 @@
 		        $('#calendar').fullCalendar({
 		            height: $(window).height() - 120,
 		            events: '@Url.Content("~/events/")',
-		            eventRender: function (event, element) {
+		            eventRender: function(event, element) {
 		                element.find('.fc-event-title').html(moment(event.start).format("h A") + ' ' + event.title);
 		            },
-		            eventClick: function (event) {
+		            eventClick: function(event) {
 		                if (event.url) {
 		                    $("#myModal").modal({
 		                        remote: event.url
@@ -107,7 +107,11 @@
 		                    return false;
 		                }
 		            }
-		        })
+		        });
+		        
+		        $('body').on('hidden.bs.modal', '.modal', function () {
+		            $(this).removeData('bs.modal');
+		        });
 
 		        $(document).on("click", "#eventForm .claim", function () {
 		            var choice = confirm(this.getAttribute('data-confirm'), 'yes', 'no');
@@ -117,10 +121,10 @@
 		                $.ajax({
 		                    type: "PUT",
 		                    url: url,
-		                    data: { Action: "Assign" }, // serializes the form's elements.
+		                    data: $(this).parents("form").serialize(), // serializes the form's elements.
 		                    success: function (data) {
-		                        alert(data); // show response from the php script.
-
+		                        $("#myModal").modal("hide");
+		                        window.location.reload();
 		                        // change color of event
 		                    },
 		                    error: function (data) {
@@ -130,7 +134,6 @@
 		            }
 		            event.preventDefault(); // avoid to execute the actual submit of the form.
 		        });
-
 		    });
 		</script>
 

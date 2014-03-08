@@ -19,7 +19,11 @@ namespace ProjectCure.Web.Models
 
         public string Manager { get; private set; }
 
-        public EventDetailsModel(int id, string title, string description, string startDateTime, string endDateTime, string manager)
+        public bool IsMine { get; private set; }
+
+        public bool IsAssigned { get; private set; }
+
+        public EventDetailsModel(int id, string title, string description, string startDateTime, string endDateTime, string manager, bool isMine, bool isAssigned)
         {
             Id = id;
             Title = title;
@@ -27,6 +31,8 @@ namespace ProjectCure.Web.Models
             StartDateTime = startDateTime;
             EndDateTime = endDateTime;
             Manager = manager;
+            IsMine = isMine;
+            IsAssigned = isAssigned;
         }
     }
 

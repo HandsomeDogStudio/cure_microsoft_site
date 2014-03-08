@@ -50,11 +50,13 @@ namespace ProjectCure.Web.Controllers
         {
             Event @event = Repository.GetEventById(id);
             string managerName = string.Empty;
+            string managerUser = null;
             if (@event.User != null)
             {
                 managerName = @event.User.UserFirstName + " " + @event.User.UserLastName;
+                managerUser = @event.User.UserEmail;
             }
-            return PartialView("Details", new EventDetailsModel(@event.EventId, @event.EventTitle, @event.EventDescription, @event.EventStartDateTime.ToString("h:mm tt"), @event.EventEndDateTime.ToString("h:mm tt"), managerName));
+            return PartialView("Details", new EventDetailsModel(@event.EventId, @event.EventTitle, @event.EventDescription, @event.EventStartDateTime.ToString("h:mm tt"), @event.EventEndDateTime.ToString("h:mm tt"), managerName, managerUser == HttpContext.User.Identity.Name, managerUser != null));
         }
 
         [HttpPost]
