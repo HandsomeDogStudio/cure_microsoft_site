@@ -63,6 +63,7 @@
     <Compile Include="SHA256Test.cs" />
     <Compile Include="PasswordSavingAndRetrieval.cs" />
     <Compile Include="TemplateTests.cs" />
+    <Compile Include="TestEmailNotifier.cs" />
     <Compile Include="UserTests.cs" />
   </ItemGroup>
   <ItemGroup>
