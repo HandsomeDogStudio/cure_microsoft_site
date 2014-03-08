@@ -79,32 +79,36 @@ namespace ProjectCure.Web.Controllers
                     UserNotifyTenDays = model.Notify10Days,
                 };
 
-                
-                if (!model.IsNew && !user.UserActiveIn)
-                {
-                    var oldUser = Repository.GetUserById(user.UserId);
-                    if (oldUser != null && oldUser.UserActiveIn)
-                    {
-                        //remove manager from future events if being inactivated
-                        Repository.RemoveManagerFromEvents(user.UserId);
-
-                        //TODO: send notifications?
-                    }
-                }
+                var existingUser = Repository.GetUserById(user.UserId);
 
                 Repository.SaveUser(user);
 
-                //set password for new user and notify via email
+                var notifier = new EmailNotifier();
+                
                 if (model.IsNew)
                 {
+                    //set password for new user and notify via email
                     var newPassword = GetNewPassword();
                     user.UserPassword = newPassword;
                     Repository.UpdatePassword(user);
 
-                    var notifier = new EmailNotifier();
                     notifier.GiveTemporaryPasswordNotification(Repository, user.UserEmail, newPassword);
                 }
+                else if (!model.IsNew && !user.UserActiveIn)
+                {
+                    if (existingUser != null && existingUser.UserActiveIn)
+                    {
+                        //unassign from events, and send notifications
+                    
+                        //remove manager from future events if being inactivated
+                        var unassociatedEvents = Repository.RemoveManagerFromEvents(user.UserId);
 
+                        foreach (var evt in unassociatedEvents)
+                        {
+                            notifier.EventCancellationNotification(Repository, evt, user.UserEmail);
+                        }
+                    }
+                }
             }
 
             model.Roles = Repository.GetRoleList();
