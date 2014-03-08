@@ -207,6 +207,8 @@
     <Content Include="Content\css\main.css" />
     <Content Include="Content\js\main.js" />
     <Content Include="Content\img\pc-logo%402x.png" />
+    <Content Include="Content\img\pc-logo-footer%402x.png" />
+    <Content Include="Content\img\pc-logo-footer.png" />
     <Content Include="Content\img\pc-logo.png" />
     <Content Include="Content\js\vendor\bootstrap.js" />
     <Content Include="Content\js\vendor\bootstrap.min.js" />
@@ -227,6 +229,7 @@
     <Content Include="Content\img\wood-slates.jpg" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
     <Content Include="Scripts\custom\main.js" />
+    <Content Include="Scripts\jquery\plugins\jquery.form.js" />
     <Content Include="Scripts\jquery\jquery-migrate-1.2.1.js" />
     <Content Include="Scripts\jquery\plugins\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery\plugins\jquery.validate.unobtrusive.js" />
