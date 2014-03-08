@@ -79,6 +79,7 @@ namespace ProjectCure.Web.Controllers
                     UserNotifyTenDays = model.Notify10Days,
                 };
 
+                
                 if (!model.IsNew && !user.UserActiveIn)
                 {
                     var oldUser = Repository.GetUserById(user.UserId);
@@ -92,6 +93,18 @@ namespace ProjectCure.Web.Controllers
                 }
 
                 Repository.SaveUser(user);
+
+                //set password for new user and notify via email
+                if (model.IsNew)
+                {
+                    var newPassword = GetNewPassword();
+                    user.UserPassword = newPassword;
+                    Repository.UpdatePassword(user);
+
+                    var notifier = new EmailNotifier();
+                    notifier.GiveTemporaryPasswordNotification(Repository, user.UserEmail, newPassword);
+                }
+
             }
 
             model.Roles = Repository.GetRoleList();
@@ -107,17 +120,14 @@ namespace ProjectCure.Web.Controllers
             var user = Repository.GetUserById(id);
             if (user != null)
             {
-                var passwordGenerator = new PasswordGenerator();
-                var tempPassword = passwordGenerator.GeneratePassword(10);
-
-                user.UserPassword = tempPassword;
-
+                var newPassword = GetNewPassword();
+                user.UserPassword = newPassword;
                 Repository.UpdatePassword(user);
 
                 success = true;
 
                 var notifier = new EmailNotifier();
-                notifier.GiveTemporaryPasswordNotification(Repository, user.UserEmail, tempPassword);
+                notifier.GiveTemporaryPasswordNotification(Repository, user.UserEmail, newPassword);
 
                 return Json(new
                 {
@@ -129,6 +139,13 @@ namespace ProjectCure.Web.Controllers
             }
 
             return Json(new { success });
+        }
+
+        private string GetNewPassword(int length = 10)
+        {
+            var passwordGenerator = new PasswordGenerator();
+            var tempPassword = passwordGenerator.GeneratePassword(length);
+            return tempPassword;
         }
     }
 }
