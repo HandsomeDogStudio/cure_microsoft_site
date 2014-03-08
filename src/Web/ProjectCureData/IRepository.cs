@@ -15,5 +15,7 @@ namespace ProjectCureData
 		void SaveUser(User user);
 
         IEnumerable<Event> GetEventsBetweenDates(DateTime startDate, DateTime endDate);
+	    Event GetEventById(int eventId);
+	    void DeleteEventById(int eventId);
 	}
 }

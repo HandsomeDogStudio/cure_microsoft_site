@@ -74,5 +74,21 @@ namespace ProjectCureData
                 return ctx.Events.Include("User").Where(e => e.EventStartDateTime >= startDate && e.EventEndDateTime < endDate).ToList();
             }
         }
+
+	    public Event GetEventById(int eventId)
+	    {
+	        using (var ctx = new ProjectCureContext())
+	        {
+                return ctx.Events.Include("User").FirstOrDefault(e => e.EventId == eventId);
+	        }
+	    }
+
+	    public void DeleteEventById(int eventId)
+	    {
+	        using (var ctx = new ProjectCureContext())
+	        {
+	            ctx.Events.Remove(GetEventById(eventId));
+	        }
+	    }
 	}
 }

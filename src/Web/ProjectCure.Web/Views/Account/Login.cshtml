@@ -1,9 +1,5 @@
 ﻿@model ProjectCure.Web.Models.LoginModel
 @{ ViewBag.Title = "Log in"; }
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
-<section id="loginForm">
 <h2>Use a local account to log in.</h2>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
     @Html.AntiForgeryToken()
@@ -25,9 +21,4 @@
         </ol>
         <input type="submit" value="Log in" />
     </fieldset>
-}
-</section>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }
