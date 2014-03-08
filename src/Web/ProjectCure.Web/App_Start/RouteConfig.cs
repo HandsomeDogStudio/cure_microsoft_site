@@ -15,6 +15,9 @@ namespace ProjectCure.Web
             routes.IgnoreRoute("{resource}.json/{*pathInfo}");
             routes.IgnoreRoute("{resource}.css/{*pathInfo}");
             routes.IgnoreRoute("{resource}.js/{*pathInfo}");
+            routes.IgnoreRoute("Content/{*pathInfo}");
+            routes.IgnoreRoute("Scripts/{*pathInfo}");
+            
 
             routes.MapRoute(
                 name: "CalendarEvents",
