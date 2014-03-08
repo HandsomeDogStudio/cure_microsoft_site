@@ -15,7 +15,7 @@ namespace ProjectCure.Web.Models
         [Required]
         [DataType(DataType.EmailAddress)]
         [StringLength(256)]
-        [Display(Name = "Username")]
+        [Display(Name = "Email")]
         public string UserName { get; set; }
 
         [Required]
@@ -27,18 +27,18 @@ namespace ProjectCure.Web.Models
         [StringLength(50)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        
+
         [Required]
         [Display(Name = "Role")]
-        public int RoleId { get set; }
+        public int RoleId { get; set; }
         
         [Display(Name = "Is Active?")]
         public bool IsActive { get; set; }
         
-        [Display(Name = "5 day notification?")]
+        [Display(Name = "Every 5 days")]
         public bool Notify5Days { get; set; }
 
-        [Display(Name = "10 day notification?")]
+        [Display(Name = "Every 10 days")]
         public bool Notify10Days { get; set; }
 
         public IEnumerable<Role> Roles { get; set; }
@@ -47,12 +47,16 @@ namespace ProjectCure.Web.Models
         {
             get
             {
-                return Roles.Select(r => new SelectListItem
-                {
-                    Selected = r.RoleId == RoleId,
-                    Text = r.RoleName,
-                    Value = r.RoleId.ToString(),
-                });
+                return 
+                    (new[] { new SelectListItem { Text = "", Value = "" } })
+                    .Union(
+                        Roles.Select(r => new SelectListItem
+                        {
+                            Selected = r.RoleId == RoleId,
+                            Text = r.RoleName,
+                            Value = r.RoleId.ToString(),
+                        })
+                    );
             }
         }
     }

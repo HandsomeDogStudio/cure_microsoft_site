@@ -268,10 +268,10 @@
     <Content Include="data.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Admin\UserList.cshtml" />
+    <Content Include="Views\User\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
