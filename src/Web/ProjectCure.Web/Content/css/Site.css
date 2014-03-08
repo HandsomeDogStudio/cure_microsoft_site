@@ -14,7 +14,10 @@ a:hover { color:#a40a2b; }
   overflow:auto;
   padding-bottom:150px; /* this needs to be bigger than footer height*/
 }
-
+.container-body {
+    margin-bottom: 20px;
+    padding-top: 10px;
+}
 .container.footer {
   background:#000;
   color:#aaa;
