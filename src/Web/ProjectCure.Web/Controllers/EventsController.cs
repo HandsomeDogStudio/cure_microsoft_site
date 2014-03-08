@@ -74,13 +74,13 @@ namespace ProjectCure.Web.Controllers
         {
             switch (input.Action)
             {
-                case "assign":
+                case EventEditAction.Assign:
                     Repository.AssignManager(id, HttpContext.User.Identity.Name);
                     break;
-                case "unassign":
+                case EventEditAction.Unassign:
                     Repository.AssignManager(id, null);
                     break;
-                case "edit":
+                case EventEditAction.Edit:
                     if (HttpContext.User.IsInRole("Admin"))
                     {
                         var manager = Repository.GetUserById(input.ManagerId);
