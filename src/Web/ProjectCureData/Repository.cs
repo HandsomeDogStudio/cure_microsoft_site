@@ -162,17 +162,20 @@ namespace ProjectCureData
 
 	    public void AssignManager(int eventId, string username)
 	    {
-	        using (var ctx = new ProjectCureContext())
+	        using (new ProjectCureContext())
 	        {
 	            Event e = GetEventById(eventId);
                 if(e == null) throw new ArgumentException();
 	            User u = null;
+	            int? managerId = null;
 	            if (username != null)
 	            {
 	                u = GetUserByUserName(username);
                     if(u == null) throw new ArgumentException();
+	                managerId = u.UserId;
 	            }
 	            e.User = u;
+	            e.EventManagerId = managerId;
                 SaveEvent(e);
 	        }
 	    }
