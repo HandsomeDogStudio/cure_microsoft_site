@@ -67,6 +67,9 @@ namespace ProjectCure.Web.Controllers
                     UserNotifyTenDays = model.Notify10Days,
                 };
 
+                //TODO: if inactivating, cancel associated future events
+
+
                 Repository.SaveUser(user);
             }
 
@@ -80,12 +83,31 @@ namespace ProjectCure.Web.Controllers
         {
             var success = false;
 
-
-
-            return Json(new
+            var user = Repository.GetUserById(id);
+            if (user != null)
             {
-                success
-            });
+                //TODO: replace with generated password
+                var tempPassword = "temp";
+
+                user.UserPassword = tempPassword;
+
+                Repository.UpdatePassword(user);
+
+                success = true;
+
+                var notifier = new EmailNotifier();
+                notifier.GiveTemporaryPassword(Repository, user.UserEmail, tempPassword);
+
+                return Json(new
+                {
+                    UserId = user.UserId,
+                    UserName = user.UserFirstName + " " + user.UserLastName,
+                    UserEmail = user.UserEmail,
+                    success,
+                });
+            }
+
+            return Json(new { success });
         }
     }
 }

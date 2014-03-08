@@ -11,7 +11,7 @@ namespace ProjectCure.IntegrationTests
         public void TestHappyPathEmailNotifier()
         {
             var testEmailer = new EmailNotifier();
-            testEmailer.SendNotification("nickolas.wood@hotmail.com", "Sign Up Template");
+            //testEmailer.SendNotification("nickolas.wood@hotmail.com", "Sign Up Template");
         }
     }
 }
