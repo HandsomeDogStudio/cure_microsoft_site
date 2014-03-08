@@ -34,6 +34,7 @@ namespace ProjectCure.Web.Controllers
             return View();
         }
 
+        [CustomAuthorize]
         public ActionResult Calendar()
         {
             return View();

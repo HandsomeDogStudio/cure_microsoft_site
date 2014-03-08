@@ -12,7 +12,7 @@ using ProjectCureData;
 
 namespace ProjectCure.Web.Controllers
 {
-    [Authorize]
+    [CustomAuthorize]
     public class AccountController : ProjectCureControllerBase
     {
         public AccountController(IRepository repository) : base(repository)
@@ -60,9 +60,6 @@ namespace ProjectCure.Web.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Account/LogOff
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -72,119 +69,31 @@ namespace ProjectCure.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        ////
-        //// GET: /Account/Register
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View(new ChangePasswordModel
+            {
+                UserName = User.Identity.Name
+            });
+        }
 
-        //[AllowAnonymous]
-        //public ActionResult Register()
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            if (ModelState.IsValid && Repository.IsValidUser(model.UserName, model.OldPassword))
+            {
+                Repository.UpdatePassword(new ProjectCureData.Models.User
+                {
+                    UserEmail = model.UserName,
+                    UserPassword = model.NewPassword
+                });
 
-        ////
-        //// POST: /Account/Register
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Register(RegisterModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Attempt to register the user
-        //        try
-        //        {
-        //            WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-        //            WebSecurity.Login(model.UserName, model.Password);
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        catch (MembershipCreateUserException e)
-        //        {
-        //            ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
-        //        }
-        //    }
+            }
 
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
-        
-        ////
-        //// GET: /Account/Manage
-
-        //public ActionResult Manage(ManageMessageId? message)
-        //{
-        //    ViewBag.StatusMessage =
-        //        message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-        //        : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-        //        : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-        //        : "";
-        //    ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-        //    ViewBag.ReturnUrl = Url.Action("Manage");
-        //    return View();
-        //}
-
-        ////
-        //// POST: /Account/Manage
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Manage(LocalPasswordModel model)
-        //{
-        //    bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-        //    ViewBag.HasLocalPassword = hasLocalAccount;
-        //    ViewBag.ReturnUrl = Url.Action("Manage");
-        //    if (hasLocalAccount)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            // ChangePassword will throw an exception rather than return false in certain failure scenarios.
-        //            bool changePasswordSucceeded;
-        //            try
-        //            {
-        //                changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
-        //            }
-        //            catch (Exception)
-        //            {
-        //                changePasswordSucceeded = false;
-        //            }
-
-        //            if (changePasswordSucceeded)
-        //            {
-        //                return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
-        //            }
-        //            else
-        //            {
-        //                ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        // User does not have a local password so remove any validation errors caused by a missing
-        //        // OldPassword field
-        //        ModelState state = ModelState["OldPassword"];
-        //        if (state != null)
-        //        {
-        //            state.Errors.Clear();
-        //        }
-
-        //        if (ModelState.IsValid)
-        //        {
-        //            try
-        //            {
-        //                WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);
-        //                return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
-        //            }
-        //            catch (Exception)
-        //            {
-        //                ModelState.AddModelError("", String.Format("Unable to create local account. An account with the name \"{0}\" may already exist.", User.Identity.Name));
-        //            }
-        //        }
-        //    }
-
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
+            return View(model);
+        }
 
         #region Helpers
 
