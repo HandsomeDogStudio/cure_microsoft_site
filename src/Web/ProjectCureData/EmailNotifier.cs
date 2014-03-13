@@ -12,7 +12,7 @@ namespace ProjectCure.Web.Controllers
 {
 	public class EmailNotifier
 	{
-		private SmtpClient smtpClient;
+		private IInjectableSmtpClient _smtpClient;
 		private string host;
 		private int port;
 		private bool enableSSL;
@@ -36,19 +36,18 @@ namespace ProjectCure.Web.Controllers
 
 
 			//Create the smtp client with info given above
-			CreateSmtpClient();
-			SetSection();
+			_smtpClient = new InjectableSmptClient();
+			//SetSection();
 		}
 
 		/// <summary>
 		/// This version is used when you want to define the SMTP info from another source outside of gmail
 		/// </summary>
 		/// <param name="smtpClient"></param>
-		public EmailNotifier(SmtpClient smtpClient)
+		public EmailNotifier(IInjectableSmtpClient smtpClient)
 		{
-			//Create the smtp client with info given above
-			this.smtpClient = smtpClient;
-			SetSection();
+			_smtpClient = smtpClient;
+			//SetSection();
 		}
 
 		public void GiveTemporaryPasswordNotification(IRepository repository, string recipientAddress, string tempPassword)
@@ -67,10 +66,10 @@ namespace ProjectCure.Web.Controllers
 			SendNotification(repository, new List<string>() { recipientAddress }, templateBody, templateSubject);
 		}
 
-		private void SetSection()
-		{
-			section = ConfigurationManager.GetSection("system.net/mailSettings/smtp") as SmtpSection;
-		}
+		//private void SetSection()
+		//{
+		//	section = ConfigurationManager.GetSection("system.net/mailSettings/smtp") as SmtpSection;
+		//}
 
 		public void PasswordChangeConfirmationNotification(IRepository repository, string recipientAddress)
 		{
@@ -148,6 +147,7 @@ namespace ProjectCure.Web.Controllers
 			return userFullName;
 		}
 
+		/*
 		private void CreateSmtpClient()
 		{
 			smtpClient = new SmtpClient
@@ -159,6 +159,7 @@ namespace ProjectCure.Web.Controllers
 				//Credentials = new System.Net.NetworkCredential(username, password)
 			};
 		}
+		 */
 
 		private void GetTemplateByTemplateName(IRepository repository, string templateName, out string templateBody, out string templateSubject)
 		{
@@ -167,7 +168,7 @@ namespace ProjectCure.Web.Controllers
 			templateSubject = template.TemplateSubject;
 		}
 
-		private void SendNotification(IRepository repository, List<string> recipientAddresses, string body, string subject)
+		private void SendNotification(IRepository repository, IEnumerable<string> recipientAddresses, string body, string subject)
 		{
 			var email = new MailMessage();
 			email.From = new MailAddress("donotreply@projectcure.org");
@@ -180,7 +181,27 @@ namespace ProjectCure.Web.Controllers
 				email.To.Add(recipientAddress);
 			}
 
-		    smtpClient.SendMailAsync(email);
+		    _smtpClient.Send(email);
+		}
+	}
+
+	public interface IInjectableSmtpClient
+	{
+		void Send(MailMessage message);
+	}
+
+	public class InjectableSmptClient : IInjectableSmtpClient
+	{
+		private readonly SmtpClient smtpClient;
+
+		public InjectableSmptClient()
+		{
+			smtpClient = new SmtpClient();
+		}
+
+		public void Send(MailMessage message)
+		{
+			smtpClient.Send(message);
 		}
 	}
 }
