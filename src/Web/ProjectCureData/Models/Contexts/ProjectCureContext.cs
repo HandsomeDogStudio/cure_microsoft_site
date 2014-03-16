@@ -6,15 +6,13 @@ namespace ProjectCureData.Models
 {
     public partial class ProjectCureContext : DbContext
     {
-        static ProjectCureContext()
-        {
-            Database.SetInitializer<ProjectCureContext>(null);
-        }
-
         public ProjectCureContext()
             : base("Name=ProjectCureContext")
-        {
-        }
+        {}
+
+        public ProjectCureContext(string connectionString)
+            : base(connectionString)
+        {}
 
         public DbSet<Event> Events { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -23,10 +21,7 @@ namespace ProjectCureData.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new EventMap());
-            modelBuilder.Configurations.Add(new RoleMap());
-            modelBuilder.Configurations.Add(new TemplateMap());
-            modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Configurations.AddFromAssembly(typeof(ProjectCureContext).Assembly);
         }
     }
 }

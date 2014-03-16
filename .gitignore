@@ -154,3 +154,7 @@ $RECYCLE.BIN/
 # Mac desktop service store files
 .DS_Store
 /src/Web/temp_web/vwd.webinfo
+/src/Web/ProjectCure.Web/App_Data/ProjectCure.mdf
+/src/Web/ProjectCure.Web/App_Data/ProjectCure_log.ldf
+/src/Web/ProjectCure.Web/Logs/log.txt
+/src/Web/ProjectCure.Web/Logs/log.txt.20140313.txt
