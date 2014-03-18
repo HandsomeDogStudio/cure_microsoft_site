@@ -94,6 +94,8 @@ namespace ProjectCure.Web.Controllers
 
                 var notifier = new EmailNotifier();
                 notifier.PasswordChangeConfirmationNotification(Repository, model.UserName);
+
+                return View("ChangePasswordSuccess");
             }
 
             return View(model);

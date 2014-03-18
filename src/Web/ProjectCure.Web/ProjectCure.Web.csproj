@@ -192,9 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap-theme.css" />
-    <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />
-    <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\fullcalendar.css" />
     <Content Include="Content\css\bootstrap-custom.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
@@ -208,20 +206,10 @@
     <Content Include="Content\img\icons\apple-touch-icon.png" />
     <Content Include="Content\img\icons\favicon.ico" />
     <Content Include="Content\css\main.css" />
-    <Content Include="Content\js\main.js" />
     <Content Include="Content\img\pc-logo%402x.png" />
     <Content Include="Content\img\pc-logo-footer%402x.png" />
     <Content Include="Content\img\pc-logo-footer.png" />
     <Content Include="Content\img\pc-logo.png" />
-    <Content Include="Content\js\vendor\bootstrap.js" />
-    <Content Include="Content\js\vendor\bootstrap.min.js" />
-    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.css" />
-    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.js" />
-    <Content Include="Content\js\vendor\fullcalendar\fullcalendar.min.js" />
-    <Content Include="Content\js\vendor\fullcalendar\gcal.js" />
-    <Content Include="Content\js\vendor\jquery-1.10.1.min.js" />
-    <Content Include="Content\js\vendor\modernizr-2.6.2-respond-1.1.0.min.js" />
-    <Content Include="Content\js\vendor\moment.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -230,9 +218,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\img\wood-slates.jpg" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
+    <Content Include="Scripts\custom\calendar.js" />
     <Content Include="Scripts\custom\main.js" />
+    <Content Include="Scripts\jquery\plugins\additional-methods.js" />
     <Content Include="Scripts\jquery\plugins\jquery.form.js" />
     <Content Include="Scripts\jquery\jquery-migrate-1.2.1.js" />
+    <Content Include="Scripts\jquery\plugins\jquery.maskedinput.js" />
     <Content Include="Scripts\jquery\plugins\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery\plugins\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery\plugins\jquery.validate.js" />
@@ -242,6 +233,7 @@
     <Content Include="Scripts\core\modernizr-2.6.2.js" />
     <Content Include="Scripts\core\respond.js" />
     <Content Include="Scripts\core\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\jquery\plugins\moment.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -305,6 +297,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\ListPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

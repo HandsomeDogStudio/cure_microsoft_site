@@ -13,5 +13,6 @@ namespace ProjectCure.Web
         public const string Custom = "~/bundles/custom";
         public const string JqueryPlugins = "~/bundles/jquery-plugins";
         public const string Respond = "~/bundles/respond";
+        public const string Calendar = "~/bundles/calendar";
     }
 }

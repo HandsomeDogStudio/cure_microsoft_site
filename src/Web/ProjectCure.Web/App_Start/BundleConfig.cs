@@ -56,16 +56,23 @@ namespace ProjectCure.Web
 
             //jquery custom plugins
             bundles.Add(new ScriptBundle(ScriptBundles.JqueryPlugins).Include(
+                "~/Scripts/jquery/plugins/moment.js",
                 "~/Scripts/jquery/plugins/jquery.form.js",
                 "~/Scripts/jquery/plugins/jquery.validate.js",
+                "~/Scripts/jquery/plugins/additional-methods.js",
                 "~/Scripts/jquery/plugins/jquery.unobtrusive-ajax.js",
                 "~/Scripts/jquery/plugins/jquery.validate.unobtrusive.js",
                 "~/Scripts/jquery/plugins/fullcalendar.js",
+                "~/Scripts/jquery/plugins/jquery.maskedinput.js",
                 "~/Scripts/jquery/plugins/gcal.js").ForceOrdered());
 
             //jquery custom
-            bundles.Add(new ScriptBundle(ScriptBundles.Custom).IncludeDirectory(
-                "~/Scripts/custom", "*.js"));
+            bundles.Add(new ScriptBundle(ScriptBundles.Custom).Include(
+                "~/Scripts/custom/main.js"));
+
+            //Calendar
+            bundles.Add(new ScriptBundle(ScriptBundles.Calendar).Include(
+                "~/Scripts/custom/calendar.js"));
         }
     }
 

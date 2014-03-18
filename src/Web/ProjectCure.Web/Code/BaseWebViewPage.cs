@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectCure.Web.Code;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,15 +28,14 @@ namespace ProjectCure.Web.WebPages
             get { return User != null && User.Identity != null && User.IsInRole(WebRoles.Admin); }
         }
 
+        /// <summary>
+        /// Gets whether the current user authenticated.
+        /// </summary>
         public bool IsAuthenticated
         {
-            get
-            {
-                return User != null &&
-                       !string.IsNullOrEmpty(User.Identity.Name);
-            }
+            get { return User != null && !string.IsNullOrEmpty(User.Identity.Name); }
         }
-
+        
         #endregion
 
         #region Methods
