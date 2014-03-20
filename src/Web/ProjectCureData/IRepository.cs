@@ -14,6 +14,7 @@ namespace ProjectCureData
 		User GetUserByUserName(string userName);
 		User GetUserById(int userId);
 		void UpdatePassword(User user);
+        void DeleteUser(int id);
 		void SaveUser(User user);
 		IEnumerable<User> GetUserList();
 		IEnumerable<Role> GetRoleList();

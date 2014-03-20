@@ -210,5 +210,19 @@ namespace ProjectCureData
                 SaveEvent(e);
 	        }
 	    }
-	}
+
+
+        public void DeleteUser(int id)
+        {
+            using (var ctx = new ProjectCureContext())
+            {
+                var user = ctx.Users.Include(c => c.Events).FirstOrDefault(c => c.UserId == id);
+                if (user == null)
+                    return;                
+
+                ctx.Entry(user).State = EntityState.Deleted;
+                ctx.SaveChanges();
+            }
+        }
+    }
 }

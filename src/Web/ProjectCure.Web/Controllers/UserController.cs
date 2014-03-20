@@ -127,6 +127,21 @@ namespace ProjectCure.Web.Controllers
         }
 
         [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                Repository.DeleteUser(id);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.GetBaseException().Message });
+            }
+            
+            return Json(new { success = true, message = string.Empty });
+        }
+
+        [HttpPost]
         public ActionResult ResetPassword(int id)
         {
             var success = false;

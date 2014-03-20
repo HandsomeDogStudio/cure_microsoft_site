@@ -42,19 +42,18 @@ $(function () {
         });
     });
 
+    //Delete User button
+    $("#userList").on("click", ".btn-user-delete", function (e) {
+        e.preventDefault();
+        if (confirm("Remove this user.\nAll events linked to this user will be removed.\n\nAre you sure?")) {
+            var promise = $.post('/User/Delete', { id: $(this).data("user-id") });
+            promise.then(refreshUserList);
+        }
+    });
+
     $("#editUserModal").on("hidden.bs.modal", function (e) {
         //update the user list when the modal is hidden to 'refresh' the list with any changes made
-        $.ajax({
-            dataType: "text",
-            type: "GET",
-            url: "/User/ListPartial"
-        }).then(function (response, textStatus, jqXHR) {
-            $("#editUserModal").empty();
-            $("#userList").find("tbody").empty().html(response);
-            
-        }, function (jqXHR, textStatus, errorThrown) {
-            alert(errorThrown);
-        });
+        refreshUserList();
     });
 
     $("#userList").on("click", "a.reset-password", function (e) {
@@ -69,8 +68,7 @@ $(function () {
                 type: "POST",
                 url: "/User/ResetPassword/"
             }).then(function (response, textStatus, jqXHR) {
-                if (response.success) {
-                    
+                if (response.success) {                    
                 }
             }, function (jqXHR, textStatus, errorThrown) {
                 alert(errorThrown);
@@ -106,7 +104,18 @@ $(function () {
         });
 
         return false;
-    });
+    });    
 
-    
-})
+    function refreshUserList() {
+        $.ajax({
+            dataType: "text",
+            type: "GET",
+            url: "/User/ListPartial"
+        }).then(function (response, textStatus, jqXHR) {
+            $("#editUserModal").empty();
+            $("#userList").find("tbody").empty().html(response);            
+        }, function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        });
+    }
+});

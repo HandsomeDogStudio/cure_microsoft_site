@@ -31,31 +31,32 @@ namespace ProjectCureData.Models.Migrations
             );
 
             //Roles
-            roles.AddOrUpdate(c => c.RoleId,
+            roles.AddOrUpdate(c => c.RoleName,
                 new Role() { RoleId = 1, RoleName = "Admin" },
                 new Role() { RoleId = 2, RoleName = "Manager" }
             );
 
             //Users
-            users.AddOrUpdate(u => u.UserId,
+            users.AddOrUpdate(u => u.UserEmail,
                 new User() { UserId = 1, UserEmail = "louisfischer@gmail.com", UserFirstName = "Louis", UserLastName = "Fischer", UserRoleId = 1, UserActiveIn = true, UserNotifyFiveDays = true, UserNotifyTenDays = true, UserPassword = "8de3964d8a9f08e323ccd7185ddad9bfc706cf31822b146f7672b5c6bfdeed51" },
                 new User() { UserId = 2, UserEmail = "brian.avent@gmail.com", UserFirstName = "Brian", UserLastName = "Avent", UserRoleId = 1, UserActiveIn = true, UserNotifyFiveDays = false, UserNotifyTenDays = false, UserPassword = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08" },
                 new User() { UserId = 3, UserEmail = "jpresa_2000@hotmail.com", UserFirstName = "Jose", UserLastName = "Presa", UserRoleId = 1, UserActiveIn = true, UserNotifyFiveDays = true, UserNotifyTenDays = true, UserPassword = null },
                 new User() { UserId = 4, UserEmail = "annieellement@projectcure.org", UserFirstName = "Annie", UserLastName = "Ellement", UserRoleId = 1, UserActiveIn = true, UserNotifyFiveDays = false, UserNotifyTenDays = false, UserPassword = "6d08fed825a74ce267e94d9569a8df1c798a4df1927a1d2f2f285986d688c357" },
                 new User() { UserId = 5, UserEmail = "lindseymoore@projectcure.org", UserFirstName = "Lindsey", UserLastName = "Moore", UserRoleId = 1, UserActiveIn = true, UserNotifyFiveDays = true, UserNotifyTenDays = true, UserPassword = "d95c3086066012ccd19bc644765a6692086c227a3c356e58ea4c586caa501d6f" },
                 new User() { UserId = 6, UserEmail = "annellement@gmail.com", UserFirstName = "Annie", UserLastName = "Ellement", UserRoleId = 2, UserActiveIn = true, UserNotifyFiveDays = false, UserNotifyTenDays = false, UserPassword = "9be5aeec150a752a0de87ab04c13e1e238268872cdacb02bf74ae94a9086e651" },
-                new User() { UserId = 6, UserEmail = "m.ellement24@gmail.com", UserFirstName = "Matthew", UserLastName = "Ellement", UserRoleId = 1, UserActiveIn = true, UserNotifyFiveDays = false, UserNotifyTenDays = false, UserPassword = null }
+                new User() { UserId = 7, UserEmail = "m.ellement24@gmail.com", UserFirstName = "Matthew", UserLastName = "Ellement", UserRoleId = 1, UserActiveIn = true, UserNotifyFiveDays = false, UserNotifyTenDays = false, UserPassword = null }
             );
 
             //Events
-            events.AddOrUpdate(p => p.EventId,
+            events.AddOrUpdate(p => p.EventTitle,
                 new Event() { EventId = 1, EventDescription = "", EventEndDateTime = DateTime.Parse("2014-03-15 12:00:00.0000000"), EventTitle = "West Franklin Baptist", EventStartDateTime = DateTime.Parse("2014-03-15 09:00:00.0000000"), EventStatus = false, EventManagerId = null },
                 new Event() { EventId = 2, EventDescription = "", EventEndDateTime = DateTime.Parse("2014-03-28 12:00:00.0000000"), EventTitle = "Beta Sigma Phi", EventStartDateTime = DateTime.Parse("2014-03-28 09:00:00.0000000"), EventStatus = false, EventManagerId = null },
                 new Event() { EventId = 3, EventDescription = "", EventEndDateTime = DateTime.Parse("2014-04-09 16:00:00.0000000"), EventTitle = "Lipscomb Nursing", EventStartDateTime = DateTime.Parse("2014-04-09 13:00:00.0000000"), EventStatus = false, EventManagerId = null },
                 new Event() { EventId = 4, EventDescription = "", EventEndDateTime = DateTime.Parse("2014-04-12 12:00:00.0000000"), EventTitle = "Hermitage UMC", EventStartDateTime = DateTime.Parse("2014-04-12 09:00:00.0000000"), EventStatus = false, EventManagerId = null },
-                new Event() { EventId = 5, EventDescription = "", EventEndDateTime = DateTime.Parse("2014-04-19 12:00:00.0000000"), EventTitle = "Mount Nebo Church", EventStartDateTime = DateTime.Parse("2014-04-19 09:00:00.0000000"), EventStatus = false, EventManagerId = null },
+                new Event() { EventId = 5, EventDescription = "", EventEndDateTime = DateTime.Parse("2014-04-19 12:00:00.0000000"), EventTitle = "Mount Nebo Church", EventStartDateTime = DateTime.Parse("2014-04-19 09:00:00.0000000"), EventStatus = false, EventManagerId = 3 },
                 new Event() { EventId = 6, EventDescription = "", EventEndDateTime = DateTime.Parse("2014-04-10 12:00:00.0000000"), EventTitle = "Westminster Ladies", EventStartDateTime = DateTime.Parse("2014-04-10 09:00:00.0000000"), EventStatus = false, EventManagerId = null },
-                new Event() { EventId = 7, EventDescription = "", EventEndDateTime = DateTime.Parse("2014-04-23 19:30:00.0000000"), EventTitle = "Hands on Nashville", EventStartDateTime = DateTime.Parse("2014-04-23 17:30:00.0000000"), EventStatus = false, EventManagerId = null }
+                new Event() { EventId = 7, EventDescription = "", EventEndDateTime = DateTime.Parse("2014-04-23 19:30:00.0000000"), EventTitle = "Hands on Nashville", EventStartDateTime = DateTime.Parse("2014-04-23 17:30:00.0000000"), EventStatus = false, EventManagerId = null },
+                new Event() { EventId = 8, EventDescription = "", EventEndDateTime = DateTime.Parse("2014-04-27 12:30:00.0000000"), EventTitle = "HCA Hackathon", EventStartDateTime = DateTime.Parse("2014-04-27 15:30:00.0000000"), EventStatus = false, EventManagerId = 3 }
             );
         }
     }
