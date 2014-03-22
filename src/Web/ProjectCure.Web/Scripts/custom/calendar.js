@@ -1,5 +1,10 @@
 ﻿$(document).ready(function () {
-    $('#calendar').fullCalendar({
+   
+   var d = new Date();
+   var cMonth = parseInt(getSessionValue("cal-month", d.getMonth()));
+   var cYear = parseInt(getSessionValue("cal-year", d.getFullYear()))
+
+   var calendar = $('#calendar').fullCalendar({
         height: $(window).height() - 120,
         events: '/events/',
         eventRender: function (event, element) {
@@ -18,9 +23,11 @@
             $("#evntModal").modal({
                 remote: "/events/create?date=" + moment(date).format("YYYY-MM-DD")
             });
-        }
+        },
+        month : cMonth,
+        year: cYear
     });
-
+    
     $('body').on('hidden.bs.modal', '.modal', function () {
         $(this).removeData('bs.modal');
     });
@@ -35,6 +42,7 @@
                 url: url,
                 data: $(this).parents("form").serialize(), // serializes the form's elements.
                 success: function (data) {
+                    setDateInSession();
                     $("#evntModal").modal("hide");
                     window.location.reload();
                 },
@@ -56,6 +64,7 @@
                 url: url,
                 data: { Action: "Delete" }, // serializes the form's elements.
                 success: function (data) {
+                    setDateInSession();
                     $("#evntModal").modal("hide");
                     window.location.reload();
                 },
@@ -75,7 +84,8 @@
             url: url,
             data: $(this).parents("form").serialize(), // serializes the form's elements.
             success: function (data) {
-                $("#evntModal").modal("hide");
+                setDateInSession()
+                $("#evntModal").modal("hide");                
                 window.location.reload();
             },
             error: function (data) {
@@ -84,4 +94,18 @@
         });
         event.preventDefault();
     });
+   
+    function setDateInSession() {
+        var date = calendar.fullCalendar('getDate');
+        sessionStorage.setItem("cal-month", date.getMonth());
+        sessionStorage.setItem("cal-year", date.getFullYear());
+    }
+
+    function getSessionValue(key, def) {
+        var value = sessionStorage.getItem(key);
+        if (value === null)
+            return def;
+        else
+            return value;
+    }
 });
