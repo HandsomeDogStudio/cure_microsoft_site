@@ -140,7 +140,7 @@ namespace ProjectCure.Web.Controllers
 			templateBody = templateBody.Replace("{events}", eventsText);
 
 			//Send the email
-            SendNotification(repository, emails, templateBody, templateSubject);
+            SendNotification(repository, null, templateBody, templateSubject, emails);
 		}
 
 		private string GetFullNameFromEmailAddress(IRepository repository, string userEmailAddress)
@@ -166,9 +166,12 @@ namespace ProjectCure.Web.Controllers
 			email.Body = body;
 
             //Check to make sure any of potential recipients are inactive that they are not sent an email.
-            var emails =  addresses.Where(recipientAddress => repository.GetUserByUserName(recipientAddress).UserActiveIn).ToArray();
-            if(emails != null && emails.Count() > 0)
-                email.To.Add(string.Join<string>(",", addresses));
+            if (addresses != null)
+            {
+                var emails = addresses.Where(recipientAddress => repository.GetUserByUserName(recipientAddress).UserActiveIn).ToArray();
+                if (emails != null && emails.Count() > 0)
+                    email.To.Add(string.Join<string>(",", addresses));
+            }
 
             if(bccRecipients != null && bccRecipients.Count() > 0)
                 email.Bcc.Add(string.Join<string>(",", bccRecipients));
