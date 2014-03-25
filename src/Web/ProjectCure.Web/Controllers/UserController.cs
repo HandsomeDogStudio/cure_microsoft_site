@@ -13,7 +13,8 @@ namespace ProjectCure.Web.Controllers
     {
         private static readonly int UnfilledNotificationEmailDays = Convert.ToInt32(ConfigurationManager.AppSettings["UnfilledNotificationEmailDays"]);
 
-        public UserController(IRepository repository) : base(repository)
+        public UserController(IRepository repository)
+            : base(repository)
         {
         }
 
@@ -94,7 +95,7 @@ namespace ProjectCure.Web.Controllers
                 Repository.SaveUser(user);
 
                 var notifier = new EmailNotifier();
-                
+
                 if (model.IsNew)
                 {
                     //set password for new user and notify via email
@@ -109,7 +110,7 @@ namespace ProjectCure.Web.Controllers
                     if (existingUser != null && existingUser.UserActiveIn)
                     {
                         //unassign from events, and send notifications
-                    
+
                         //remove manager from future events if being inactivated
                         var unassociatedEvents = Repository.RemoveManagerFromEvents(user.UserId);
 
@@ -137,7 +138,7 @@ namespace ProjectCure.Web.Controllers
             {
                 return Json(new { success = false, message = ex.GetBaseException().Message });
             }
-            
+
             return Json(new { success = true, message = string.Empty });
         }
 
@@ -187,16 +188,27 @@ namespace ProjectCure.Web.Controllers
                                        .OrderBy(c => c.EventStartDateTime)
                                        .ToList();
 
-                var notifier = new EmailNotifier();
-                notifier.UnfilledEventsNotification(Repository, events);
-
-                return Json(new
+                if (events != null && events.Count() > 0)
                 {
-                    success = true,
-                    message = string.Format("{0} notification emails went out.", events.Count)
-                });
+                    var notifier = new EmailNotifier();
+                    notifier.UnfilledEventsNotification(Repository, events);
+
+                    return Json(new
+                    {
+                        success = true,
+                        message = string.Format("{0} unfilled event(s) were found.\rA notification email was sent out to active sort leaders.", events.Count)
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        message = "No unfilled events were found."
+                    });
+                }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return Json(new
                 {

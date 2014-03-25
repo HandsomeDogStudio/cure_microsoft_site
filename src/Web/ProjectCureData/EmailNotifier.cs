@@ -109,14 +109,17 @@ namespace ProjectCure.Web.Controllers
 			SendNotification(repository, listOfRecipients, templateBody, templateSubject);
 		}
 
+        public void LeadCancellationNotification(IRepository repository, Event evt)
+        {
+            //TODO: Implement admin notification when a user cancels and event
+        }
+        
 		public void UnfilledEventsNotification(IRepository repository, List<Event> eventsToBeListed)
 		{
-			var allUsers = repository.GetUserList();
-			List<string> listOfUserEmails = new List<string>();
-			foreach (var user in allUsers)
-			{
-				listOfUserEmails.Add(user.UserEmail);
-			}
+            var emails = repository.GetUserList()
+                                   .Where(c => c.UserActiveIn)
+                                   .Select(c => c.UserEmail)
+                                   .ToArray();
 
 			string templateName = "Unfilled Group Lead Email";
 			string templateBody;
@@ -137,7 +140,7 @@ namespace ProjectCure.Web.Controllers
 			templateBody = templateBody.Replace("{events}", eventsText);
 
 			//Send the email
-			SendNotification(repository, listOfUserEmails, templateBody, templateSubject);
+            SendNotification(repository, emails, templateBody, templateSubject);
 		}
 
 		private string GetFullNameFromEmailAddress(IRepository repository, string userEmailAddress)
@@ -147,20 +150,6 @@ namespace ProjectCure.Web.Controllers
 			return userFullName;
 		}
 
-		/*
-		private void CreateSmtpClient()
-		{
-			smtpClient = new SmtpClient
-			{
-				//Host = host,
-				//Port = port,
-				//EnableSsl = enableSSL,
-				//UseDefaultCredentials = useDefaultCredentials,
-				//Credentials = new System.Net.NetworkCredential(username, password)
-			};
-		}
-		 */
-
 		private void GetTemplateByTemplateName(IRepository repository, string templateName, out string templateBody, out string templateSubject)
 		{
 			Template template = repository.GetTemplateByName(templateName);
@@ -168,18 +157,21 @@ namespace ProjectCure.Web.Controllers
 			templateSubject = template.TemplateSubject;
 		}
 
-		private void SendNotification(IRepository repository, IEnumerable<string> recipientAddresses, string body, string subject)
+		private void SendNotification(IRepository repository, IEnumerable<string> addresses, string body, string subject, IEnumerable<string> bccRecipients = null )
 		{
 			var email = new MailMessage();
+
 			email.From = new MailAddress("donotreply@projectcure.org");
 			email.Subject = subject;
 			email.Body = body;
 
-			//Check to make sure any of potential recipients are inactive that they are not sent an email.
-			foreach (var recipientAddress in recipientAddresses.Where(recipientAddress => repository.GetUserByUserName(recipientAddress).UserActiveIn))
-			{
-				email.To.Add(recipientAddress);
-			}
+            //Check to make sure any of potential recipients are inactive that they are not sent an email.
+            var emails =  addresses.Where(recipientAddress => repository.GetUserByUserName(recipientAddress).UserActiveIn).ToArray();
+            if(emails != null && emails.Count() > 0)
+                email.To.Add(string.Join<string>(",", addresses));
+
+            if(bccRecipients != null && bccRecipients.Count() > 0)
+                email.Bcc.Add(string.Join<string>(",", bccRecipients));
 
 		    _smtpClient.Send(email);
 		}

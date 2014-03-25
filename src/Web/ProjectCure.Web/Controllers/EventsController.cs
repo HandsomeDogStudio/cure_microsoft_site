@@ -86,24 +86,26 @@ namespace ProjectCure.Web.Controllers
         [HttpPut]
         public void Item(int id, EditEventModel input)
         {
+            var notifier = new EmailNotifier();
+
             switch (input.Action)
             {
                 case EventEditAction.Assign:
                     Repository.AssignManager(id, HttpContext.User.Identity.Name);
                     break;
                 case EventEditAction.Unassign:
-                    Repository.AssignManager(id, null);
+                    Repository.AssignManager(id, null);                    
+                    notifier.LeadCancellationNotification(Repository, Repository.GetEventById(id));
                     break;
                 case EventEditAction.Edit:
                     if (HttpContext.User.IsInRole("Admin"))
                     {
                         User manager = null;
-                        if (input.ManagerId != null)
-                        {
-                            manager = Repository.GetUserById(input.ManagerId.Value);
-                        }
+                        if (input.ManagerId != null)                        
+                            manager = Repository.GetUserById(input.ManagerId.Value);                        
 
                         Event e = Repository.GetEventById(id);
+
                         e.EventDescription = input.Description;
                         e.EventStartDateTime = DateTime.ParseExact(input.Date + " " + input.StartTime, "M/d/yyyy HH:mm", CultureInfo.InvariantCulture);
                         e.EventEndDateTime = DateTime.ParseExact(input.Date + " " + input.EndTime, "M/d/yyyy HH:mm", CultureInfo.InvariantCulture);
@@ -116,15 +118,14 @@ namespace ProjectCure.Web.Controllers
                     break;
                 case EventEditAction.Delete:
                     if (HttpContext.User.IsInRole("Admin"))
-                    {
+                    {   
                         Event @event = Repository.GetEventById(id);
+                        string email = (@event != null && @event.User != null) ? @event.User.UserEmail : string.Empty;
                         Repository.DeleteEventById(id);
 
-                        if (@event.User != null)
-                        {
-                            var notifier = new EmailNotifier();
+                        if (!string.IsNullOrWhiteSpace(email))                        
                             notifier.EventCancellationNotification(Repository, @event, @event.User.UserEmail);
-                        }
+                        
                     }
                     break;
             }
