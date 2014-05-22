@@ -161,12 +161,11 @@ namespace ProjectCure.Web.Controllers
 		{
 			var email = new MailMessage();
 
-			email.From = new MailAddress("donotreply@projectcure.org");
 			email.Subject = subject;
 			email.Body = body;
 
             //Check to make sure any of potential recipients are inactive that they are not sent an email.
-            if (addresses != null)
+            if (addresses != null && addresses.Count() > 0)
             {
                 var emails = addresses.Where(recipientAddress => repository.GetUserByUserName(recipientAddress).UserActiveIn).ToArray();
                 if (emails != null && emails.Count() > 0)
