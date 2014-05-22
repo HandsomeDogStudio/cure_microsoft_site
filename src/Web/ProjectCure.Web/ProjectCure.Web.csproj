@@ -302,7 +302,7 @@
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\ProjectCure-Azure.pubxml" />
+    <None Include="Properties\PublishProfiles\ProjectCureFtp.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
