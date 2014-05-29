@@ -302,6 +302,7 @@
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\ProjectCureFilePublish.pubxml" />
     <None Include="Properties\PublishProfiles\ProjectCureFtp.pubxml" />
   </ItemGroup>
   <PropertyGroup>
